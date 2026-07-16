@@ -1,3 +1,8 @@
+# Deploy portfolio site to GitHub Pages (optional — enable after push)
+
+# Alternative to GitHub Actions: use GitHub Pages "Deploy from branch"
+# Settings → Pages → Deploy from branch → main → /cai_platform/web
+
 name: Deploy Portfolio to GitHub Pages
 
 on:
@@ -21,17 +26,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload portfolio artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: cai_platform/web
-
-      - name: Deploy to GitHub Pages
+      - uses: actions/deploy-pages@v4
         id: deployment
-        uses: actions/deploy-pages@v4
