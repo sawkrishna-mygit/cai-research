@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAI: The Quiet Failure of Green Building Certifications</title>
+  <style>
+    :root {
+      --ink: #0b0b0b;
+      --paper: #fbfaf6;
+      --paper2: #f3f1ea;
+      --line: rgba(0,0,0,.82);
+      --soft: rgba(0,0,0,.62);
+      --faint: rgba(0,0,0,.22);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(0,0,0,.035), transparent 18%),
+        radial-gradient(circle at 85% 22%, rgba(0,0,0,.03), transparent 20%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.018) 0, rgba(0,0,0,.018) 1px, transparent 1px, transparent 9px),
+        var(--paper);
+      font-family: "Bradley Hand", "Comic Sans MS", "Noteworthy", "Segoe Print", system-ui, sans-serif;
+      line-height: 1.35;
+    }
+
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .32;
+      background-image:
+        linear-gradient(96deg, transparent 0 48%, rgba(0,0,0,.025) 49%, transparent 50% 100%),
+        linear-gradient(4deg, transparent 0 80%, rgba(0,0,0,.025) 81%, transparent 82% 100%);
+      background-size: 29px 31px, 43px 47px;
+      mix-blend-mode: multiply;
+    }
+
+    a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+    .page { max-width: 1220px; margin: 0 auto; padding: 18px; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 8px;
+      background: linear-gradient(var(--paper), rgba(251,250,246,.92));
+      border-bottom: 2px solid var(--line);
+      transform: rotate(-.1deg);
+    }
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+    .navlinks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .navlinks a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 10px;
+      border: 2px solid var(--line);
+      border-radius: 46% 54% 48% 52% / 54% 43% 57% 46%;
+      background: rgba(255,255,255,.42);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .navlinks a:nth-child(2n) { transform: rotate(.7deg); }
+    .navlinks a:nth-child(2n+1) { transform: rotate(-.6deg); }
+
+    .sketch-box {
+      position: relative;
+      border: 3px solid var(--line);
+      border-radius: 19px 13px 17px 12px / 12px 20px 10px 18px;
+      background: rgba(255,255,255,.36);
+      box-shadow:
+        4px 5px 0 rgba(0,0,0,.08),
+        inset 0 0 0 1px rgba(0,0,0,.2);
+    }
+    .sketch-box:before,
+    .sketch-box:after {
+      content: "";
+      position: absolute;
+      inset: 5px -4px -5px 4px;
+      border: 1px solid rgba(0,0,0,.45);
+      border-radius: 15px 20px 12px 18px / 19px 11px 17px 10px;
+      pointer-events: none;
+      transform: rotate(.35deg);
+    }
+    .sketch-box:after {
+      inset: -4px 7px 7px -5px;
+      border-color: rgba(0,0,0,.26);
+      transform: rotate(-.45deg);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(310px, .97fr);
+      gap: 20px;
+      min-height: calc(100vh - 82px);
+      align-items: stretch;
+      padding: 18px 0 24px;
+    }
+    .hero-copy { padding: clamp(18px, 4vw, 38px); display: flex; flex-direction: column; justify-content: center; }
+    .eyebrow {
+      width: max-content;
+      max-width: 100%;
+      padding: 6px 12px;
+      border: 2px solid var(--ink);
+      border-radius: 50% 45% 54% 46% / 41% 52% 44% 58%;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      transform: rotate(-1.4deg);
+      background: rgba(255,255,255,.35);
+    }
+    h1 {
+      margin: 22px 0 14px;
+      font-size: clamp(42px, 7.5vw, 88px);
+      line-height: .88;
+      letter-spacing: 0;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .scribble-under {
+      display: inline-block;
+      position: relative;
+    }
+    .scribble-under:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      height: 10px;
+      border-bottom: 4px solid var(--ink);
+      border-radius: 50%;
+      transform: rotate(-1.5deg);
+    }
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(16px, 2.1vw, 22px);
+      line-height: 1.48;
+    }
+    .thesis {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .thesis div {
+      min-height: 116px;
+      padding: 14px;
+      border: 2px solid var(--line);
+      border-radius: 13px 18px 12px 15px / 19px 11px 17px 12px;
+      background: rgba(255,255,255,.28);
+      transform: rotate(var(--r));
+    }
+    .thesis strong { display: block; font-size: 26px; line-height: 1; margin-bottom: 8px; }
+    .thesis span { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+
+    .hero-visual {
+      padding: 16px;
+      overflow: hidden;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+    }
+    #sketchCanvas {
+      width: 100%;
+      flex: 1;
+      min-height: 420px;
+      display: block;
+      filter: contrast(1.06);
+    }
+    .caption {
+      margin: 12px 0 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--soft);
+      border-top: 2px dashed var(--faint);
+      padding-top: 10px;
+    }
+
+    section { padding: 34px 0; }
+    .section-title {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: .96;
+      text-transform: uppercase;
+    }
+    .section-title .rule {
+      height: 15px;
+      border-top: 4px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      transform: rotate(-.2deg);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .panel { padding: 20px; }
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .panel p, .panel li {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .panel ul { padding-left: 20px; margin: 10px 0 0; }
+
+    .noise-strip {
+      display: grid;
+      grid-template-columns: minmax(230px, .8fr) minmax(0, 1.2fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+    .big-number {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 290px;
+      padding: 22px;
+      text-align: center;
+    }
+    .big-number b {
+      font-size: clamp(86px, 15vw, 170px);
+      line-height: .8;
+      font-weight: 950;
+    }
+    .big-number span {
+      max-width: 290px;
+      margin-top: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+    }
+    .bars { padding: 22px; }
+    .bar-row { margin: 15px 0 20px; }
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .bar-track {
+      position: relative;
+      height: 28px;
+      border: 2px solid var(--ink);
+      border-radius: 11px 8px 12px 10px / 9px 13px 8px 12px;
+      background: repeating-linear-gradient(135deg, rgba(0,0,0,.06) 0 2px, transparent 2px 7px);
+    }
+    .bar-fill {
+      height: 100%;
+      width: var(--w);
+      background: repeating-linear-gradient(90deg, rgba(0,0,0,.9) 0 2px, rgba(0,0,0,.68) 2px 4px);
+      border-right: 3px solid var(--ink);
+      border-radius: 8px 4px 5px 8px;
+    }
+    .bar-fill.light {
+      background: repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, rgba(0,0,0,.08) 2px 4px);
+    }
+
+    .result-table { overflow-x: auto; padding: 12px; }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    th, td { padding: 10px 10px; border-bottom: 2px solid rgba(0,0,0,.32); text-align: left; }
+    th {
+      font-family: "Bradley Hand", "Comic Sans MS", "Noteworthy", "Segoe Print", system-ui, sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      border-bottom: 3px solid var(--ink);
+    }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .bad { font-weight: 900; }
+
+    .tool-wrap {
+      display: grid;
+      grid-template-columns: minmax(300px, .72fr) minmax(0, 1.28fr);
+      gap: 18px;
+    }
+    .control { margin: 0 0 12px; }
+    label {
+      display: block;
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    select, input {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 10px;
+      color: var(--ink);
+      background: rgba(255,255,255,.5);
+      border: 2px solid var(--ink);
+      border-radius: 10px 8px 11px 7px / 8px 10px 7px 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus, select:focus { box-shadow: 0 0 0 3px rgba(0,0,0,.14); }
+    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .score-card { padding: 20px; min-height: 100%; }
+    .score-line { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+    .tau { font-size: clamp(70px, 11vw, 132px); line-height: .82; font-weight: 950; }
+    .verdict { max-width: 420px; font-size: 27px; font-weight: 950; text-transform: uppercase; line-height: 1; }
+    .order-note, .small-note, .source-note {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--soft);
+    }
+    .gap-list { margin-top: 18px; display: grid; gap: 10px; }
+    .gap-item {
+      display: grid;
+      grid-template-columns: 112px 1fr 70px;
+      gap: 10px;
+      align-items: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+    .gap-sketch {
+      height: 18px;
+      border: 1px solid var(--ink);
+      background: repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 2px, transparent 2px 5px);
+      position: relative;
+    }
+    .gap-sketch span {
+      position: absolute;
+      right: 50%;
+      top: 0;
+      bottom: 0;
+      width: var(--w);
+      background: rgba(0,0,0,.82);
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      counter-reset: step;
+    }
+    .step {
+      padding: 18px;
+      min-height: 210px;
+      transform: rotate(var(--r));
+    }
+    .step:before {
+      counter-increment: step;
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 3px solid var(--ink);
+      border-radius: 50% 43% 54% 46% / 48% 55% 42% 52%;
+      font-size: 25px;
+      font-weight: 950;
+      margin-bottom: 12px;
+    }
+
+    .quote {
+      padding: 26px;
+      font-size: clamp(25px, 4vw, 48px);
+      line-height: 1.02;
+      font-weight: 950;
+      text-transform: uppercase;
+      transform: rotate(-.35deg);
+    }
+    .quote span {
+      display: block;
+      margin-top: 15px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 500;
+      text-transform: none;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      border-top: 3px solid var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: var(--soft);
+    }
+
+    @media (max-width: 900px) {
+      .hero, .grid-2, .noise-strip, .tool-wrap { grid-template-columns: 1fr; }
+      .grid-3, .roadmap { grid-template-columns: 1fr 1fr; }
+      .thesis { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 460px; }
+      #sketchCanvas { min-height: 330px; }
+    }
+    @media (max-width: 560px) {
+      .page { padding: 12px; }
+      .nav { position: static; align-items: flex-start; flex-direction: column; }
+      .navlinks { justify-content: flex-start; }
+      .grid-3, .roadmap, .mini-grid { grid-template-columns: 1fr; }
+      .section-title { grid-template-columns: 1fr; }
+      .section-title .rule { display: none; }
+      .hero-copy, .panel, .bars, .score-card { padding: 16px; }
+      .gap-item { grid-template-columns: 86px 1fr 58px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="nav">
+      <div class="brand">CAI / rough field notebook</div>
+      <div class="navlinks" aria-label="Page sections">
+        <a href="#problem">Noise</a>
+        <a href="#findings">Findings</a>
+        <a href="#tool">Tool</a>
+        <a href="#validation">Validation</a>
+        <a href="#users">Future use</a>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero-copy sketch-box">
+          <div class="eyebrow">Green buildings still have people inside them</div>
+          <h1>the <span class="scribble-under">quiet failure</span> of certification points</h1>
+          <p class="lead">
+            Buildings earn badges by collecting points. Occupants judge them by whether they can hear, breathe, see, and feel comfortable. CAI asks one uncomfortable question: do the points follow the pain?
+          </p>
+          <div class="thesis">
+            <div style="--r:-1.2deg"><strong>54%</strong><span>occupant acoustic dissatisfaction benchmark used in this analysis</span></div>
+            <div style="--r:.9deg"><strong>3.5%</strong><span>average certification point share given to acoustics across the dataset</span></div>
+            <div style="--r:-.5deg"><strong>-0.575</strong><span>average CAI Kendall tau across 13 certification versions</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual sketch-box" aria-label="Pencil drawing of noisy building">
+          <canvas id="sketchCanvas"></canvas>
+          <p class="caption">
+            Pencil sketch: a certified building can look clean on paper while sound privacy and thermal comfort remain the things people feel every day.
+          </p>
+        </div>
+      </section>
+
+      <section id="problem">
+        <div class="section-title">
+          <h2>Start with noise</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="noise-strip">
+          <div class="big-number sketch-box">
+            <b>54%</b>
+            <span>Acoustic dissatisfaction is the loudest signal in the occupant-priority benchmark.</span>
+          </div>
+          <div class="bars sketch-box">
+            <div class="bar-row">
+              <div class="bar-label"><span>Occupants reporting acoustic dissatisfaction</span><span>54%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--w:54%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Average certification share for acoustics</span><span>3.5%</span></div>
+              <div class="bar-track"><div class="bar-fill light" style="--w:3.5%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Average acoustic allocation gap</span><span>-50.5 points</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--w:50.5%"></div></div>
+            </div>
+            <p class="source-note">
+              This is the central human issue: the topic people complain about most is often one of the smallest point allocations.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="findings">
+        <div class="section-title">
+          <h2>What we found so far</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="grid-3">
+          <div class="panel sketch-box">
+            <h3>All systems lean negative</h3>
+            <p>Every system/version in the current dataset has negative CAI. That means the point order is not following the occupant complaint order.</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>LEED is the harsh case</h3>
+            <p>LEED versions analyzed range from tau = -0.913 to -1.000. The acoustic share remains tiny compared with the complaint benchmark.</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>WELL improves, but not enough</h3>
+            <p>WELL v2 scores much better than WELL v1, but it still underweights acoustics and thermal comfort relative to occupant complaints.</p>
+          </div>
+        </div>
+
+        <div class="result-table sketch-box" style="margin-top:18px">
+          <table aria-label="CAI results table">
+            <thead>
+              <tr><th>System</th><th>Version</th><th>Year</th><th class="num">CAI tau</th><th class="num">Acoustics gap</th><th class="num">Thermal gap</th></tr>
+            </thead>
+            <tbody id="summaryRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="tool">
+        <div class="section-title">
+          <h2>Use the tool</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="tool-wrap">
+          <div class="panel sketch-box">
+            <h3>Certification inputs</h3>
+            <p class="small-note">Load a known system/version, then edit points to test a real building report or a redesign scenario.</p>
+            <div class="control">
+              <label for="preset">Preset</label>
+              <select id="preset"></select>
+            </div>
+            <div class="mini-grid">
+              <div class="control"><label for="acPts">Acoustics</label><input id="acPts" type="number" step="0.01" min="0"></div>
+              <div class="control"><label for="thPts">Thermal</label><input id="thPts" type="number" step="0.01" min="0"></div>
+              <div class="control"><label for="liPts">Lighting</label><input id="liPts" type="number" step="0.01" min="0"></div>
+              <div class="control"><label for="airPts">Air</label><input id="airPts" type="number" step="0.01" min="0"></div>
+            </div>
+            <div class="control">
+              <label for="totalPts">System total</label>
+              <input id="totalPts" type="number" step="1" min="1">
+            </div>
+
+            <h3 style="margin-top:24px">Occupant benchmark</h3>
+            <div class="mini-grid">
+              <div class="control"><label for="acOcc">Acoustics %</label><input id="acOcc" type="number" step="1" min="0" max="100"></div>
+              <div class="control"><label for="thOcc">Thermal %</label><input id="thOcc" type="number" step="1" min="0" max="100"></div>
+              <div class="control"><label for="liOcc">Lighting %</label><input id="liOcc" type="number" step="1" min="0" max="100"></div>
+              <div class="control"><label for="airOcc">Air %</label><input id="airOcc" type="number" step="1" min="0" max="100"></div>
+            </div>
+          </div>
+
+          <div class="score-card sketch-box">
+            <div class="score-line">
+              <div class="tau" id="tauOut">-</div>
+              <div class="verdict" id="verdictOut">choose a system</div>
+            </div>
+            <p class="order-note" id="orderOut"></p>
+            <div class="gap-list" id="gapList"></div>
+            <p class="source-note" id="toolNote"></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="validation">
+        <div class="section-title">
+          <h2>How to make it paper-level</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="quote sketch-box">
+          CAI becomes much stronger when it predicts real post-occupancy satisfaction.
+          <span>Right now, it is a certification-design alignment analysis. The next level is validation: compare CAI scores with actual satisfaction from real buildings.</span>
+        </div>
+        <div class="roadmap" style="margin-top:18px">
+          <div class="step sketch-box" style="--r:-1deg">
+            <h3>Published evidence check</h3>
+            <p>Extract outcomes from studies comparing LEED, WELL, and green buildings. Test whether the CAI ordering agrees with reported satisfaction patterns.</p>
+          </div>
+          <div class="step sketch-box" style="--r:.6deg">
+            <h3>Ask for de-identified data</h3>
+            <p>Email CBE / WELL / POE researchers for building-level aggregates: anonymous building ID, certification, satisfaction means, respondent count.</p>
+          </div>
+          <div class="step sketch-box" style="--r:-.4deg">
+            <h3>Campus pilot</h3>
+            <p>Survey occupants in accessible certified buildings using five questions: acoustics, thermal, lighting, air, overall satisfaction.</p>
+          </div>
+          <div class="step sketch-box" style="--r:.9deg">
+            <h3>Correlation test</h3>
+            <p>Run CAI vs satisfaction. If higher CAI predicts higher satisfaction, the index becomes a validated instrument, not just a descriptive score.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="users">
+        <div class="section-title">
+          <h2>Who can use this?</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="grid-2">
+          <div class="panel sketch-box">
+            <h3>Future users</h3>
+            <ul>
+              <li>Building science researchers testing certification systems.</li>
+              <li>Campus sustainability teams comparing building priorities.</li>
+              <li>Architects checking whether design targets match occupant pain.</li>
+              <li>Certification bodies considering IEQ point reweighting.</li>
+              <li>Students building a stronger POE validation dataset.</li>
+            </ul>
+          </div>
+          <div class="panel sketch-box">
+            <h3>Why it is good</h3>
+            <p>It turns a vague claim into a measurable one. Instead of saying certifications care about occupants, CAI asks whether their point structures rank occupant problems in the same order occupants do.</p>
+            <p>It is transparent, reproducible, and easy to challenge. If someone has better occupant data or better credit extraction, the tool can rerun the score.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="panel sketch-box">
+          <h3>Sources used in the current project</h3>
+          <p>
+            Project data files: <code>data/certification_points_complete.csv</code>, <code>results_comprehensive.csv</code>.
+            Occupant benchmark: CBE occupant survey / Graham et al. 2021 as represented in project files.
+            External validation leads found so far include CBE occupant survey research, Altomonte & Schiavon 2013 LEED/non-LEED work, and Kent et al. 2024 WELL/LEED occupant satisfaction comparison.
+          </p>
+          <p>
+            Useful links:
+            <a href="https://cbe.berkeley.edu/" target="_blank" rel="noreferrer">Center for the Built Environment</a>,
+            <a href="https://www.usgbc.org/projects" target="_blank" rel="noreferrer">USGBC project directory</a>,
+            <a href="https://www.nature.com/articles/s41598-024-65624-z" target="_blank" rel="noreferrer">Kent et al. 2024 Scientific Reports</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Built as a black-and-white rough pencil field-note page. Scientific caveat: CAI currently measures rating-system design alignment. Building-level predictive validation requires post-occupancy data.
+    </footer>
+  </div>
+
+  <script>
+    const systems = [
+      {name:"LEED 2009", system:"LEED", version:"2009", year:2009, ac:0, th:3, li:3, air:9, total:110, tau:-0.913, acGap:-54.0, thGap:-36.3},
+      {name:"LEED v4", system:"LEED", version:"v4", year:2013, ac:1, th:1, li:6, air:8, total:110, tau:-0.913, acGap:-53.1, thGap:-38.1},
+      {name:"LEED v4.1", system:"LEED", version:"v4.1", year:2019, ac:1, th:1, li:6, air:8, total:110, tau:-0.913, acGap:-53.1, thGap:-38.1},
+      {name:"LEED v5", system:"LEED", version:"v5", year:2025, ac:1, th:2, li:4, air:10, total:110, tau:-1.000, acGap:-53.1, thGap:-37.2},
+      {name:"WELL v1", system:"WELL", version:"v1", year:2014, ac:7, th:8, li:10, air:12, total:100, tau:-1.000, acGap:-47.0, thGap:-31.0},
+      {name:"WELL v2", system:"WELL", version:"v2", year:2018, ac:17, th:12, li:14, air:28, total:120, tau:-0.333, acGap:-39.8, thGap:-29.0},
+      {name:"BREEAM Intl v6", system:"BREEAM", version:"Intl v6", year:2019, ac:4, th:3, li:3, air:5, total:110, tau:-0.183, acGap:-50.4, thGap:-36.3},
+      {name:"BREEAM USA In-Use v6", system:"BREEAM", version:"USA In-Use v6", year:2021, ac:4, th:3, li:3, air:5, total:110, tau:-0.183, acGap:-50.4, thGap:-36.3},
+      {name:"BREEAM Intl v7", system:"BREEAM", version:"Intl v7", year:2023, ac:4, th:3, li:3, air:7, total:110, tau:-0.183, acGap:-50.4, thGap:-36.3},
+      {name:"BREEAM USA Residential Plus", system:"BREEAM", version:"USA Residential Plus", year:2025, ac:4, th:3, li:3, air:5, total:100, tau:-0.183, acGap:-50.0, thGap:-36.0},
+      {name:"Fitwel v3 CI", system:"Fitwel", version:"v3 CI", year:2026, ac:1.26, th:1.68, li:7.28, air:5.23, total:104, tau:-0.667, acGap:-52.8, thGap:-37.4},
+      {name:"Fitwel v3 MTWB", system:"Fitwel", version:"v3 MTWB", year:2026, ac:2.94, th:1.47, li:5.51, air:4.59, total:110, tau:-0.333, acGap:-51.3, thGap:-37.7},
+      {name:"Fitwel v3 MFR", system:"Fitwel", version:"v3 MFR", year:2026, ac:3.85, th:1.40, li:7.00, air:7.70, total:120, tau:-0.667, acGap:-50.8, thGap:-37.8}
+    ];
+
+    const topicNames = ["Acoustics", "Thermal", "Lighting", "Air"];
+    const ids = ["ac", "th", "li", "air"];
+
+    function el(id) { return document.getElementById(id); }
+    function sign(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; }
+    function tauB(x, y) {
+      let nc = 0, nd = 0, tiesX = 0, tiesY = 0;
+      const n = x.length;
+      const pairs = n * (n - 1) / 2;
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          const sx = sign(x[i] - x[j]);
+          const sy = sign(y[i] - y[j]);
+          if (sx === 0) tiesX++;
+          if (sy === 0) tiesY++;
+          if (sx !== 0 && sy !== 0) {
+            if (sx === sy) nc++;
+            else nd++;
+          }
+        }
+      }
+      const den = Math.sqrt((pairs - tiesX) * (pairs - tiesY));
+      return den ? (nc - nd) / den : 0;
+    }
+    function verdict(t) {
+      if (t >= .5) return "aligned with occupant pain";
+      if (t >= .1) return "weakly aligned";
+      if (t > -.1) return "nearly unrelated";
+      if (t > -.5) return "misaligned";
+      return "strongly inverted";
+    }
+    function fmt(x, d=1) {
+      return Number(x).toFixed(d);
+    }
+    function loadPreset(index) {
+      const s = systems[index];
+      el("acPts").value = s.ac;
+      el("thPts").value = s.th;
+      el("liPts").value = s.li;
+      el("airPts").value = s.air;
+      el("totalPts").value = s.total;
+      calc();
+    }
+    function calc() {
+      const pts = [Number(el("acPts").value), Number(el("thPts").value), Number(el("liPts").value), Number(el("airPts").value)];
+      const total = Math.max(1, Number(el("totalPts").value));
+      const occ = [Number(el("acOcc").value), Number(el("thOcc").value), Number(el("liOcc").value), Number(el("airOcc").value)];
+      const pct = pts.map(p => 100 * p / total);
+      const t = tauB(pct, occ);
+      el("tauOut").textContent = (t >= 0 ? "+" : "") + t.toFixed(3);
+      el("verdictOut").textContent = verdict(t);
+      const pointOrder = topicNames.map((name, i) => [name, pct[i]]).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+      const occOrder = topicNames.map((name, i) => [name, occ[i]]).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+      el("orderOut").innerHTML = "<b>Certification rewards:</b> " + pointOrder.join(" > ") + "<br><b>Occupants complain:</b> " + occOrder.join(" > ");
+      const gapList = el("gapList");
+      gapList.innerHTML = "";
+      let worstIndex = 0;
+      topicNames.forEach((name, i) => {
+        const gap = pct[i] - occ[i];
+        if (gap < pct[worstIndex] - occ[worstIndex]) worstIndex = i;
+        const row = document.createElement("div");
+        row.className = "gap-item";
+        row.innerHTML = "<b>" + name + "</b><div class='gap-sketch'><span style='--w:" + Math.min(96, Math.abs(gap) * 1.65) + "%'></span></div><b>" + (gap >= 0 ? "+" : "") + fmt(gap, 1) + "</b>";
+        gapList.appendChild(row);
+      });
+      el("toolNote").textContent = "Most under-served topic: " + topicNames[worstIndex] + ". Certification gives it " + fmt(pct[worstIndex], 1) + "% of total points while occupant dissatisfaction benchmark is " + fmt(occ[worstIndex], 0) + "%.";
+    }
+
+    function fillTables() {
+      const select = el("preset");
+      systems.forEach((s, i) => {
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = s.name + " (" + s.year + ")";
+        select.appendChild(opt);
+      });
+      select.value = "1";
+      select.addEventListener("change", () => loadPreset(Number(select.value)));
+      ["acPts","thPts","liPts","airPts","totalPts","acOcc","thOcc","liOcc","airOcc"].forEach(id => {
+        el(id).addEventListener("input", calc);
+      });
+      el("acOcc").value = 54;
+      el("thOcc").value = 39;
+      el("liOcc").value = 26;
+      el("airOcc").value = 20;
+      loadPreset(1);
+
+      const rows = el("summaryRows");
+      systems.forEach(s => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = "<td>" + s.system + "</td><td>" + s.version + "</td><td>" + s.year + "</td><td class='num bad'>" + s.tau.toFixed(3) + "</td><td class='num'>" + s.acGap.toFixed(1) + "</td><td class='num'>" + s.thGap.toFixed(1) + "</td>";
+        rows.appendChild(tr);
+      });
+    }
+
+    function drawSketch() {
+      const canvas = el("sketchCanvas");
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(320, rect.width * dpr);
+      canvas.height = Math.max(320, rect.height * dpr);
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const w = rect.width, h = rect.height;
+      ctx.clearRect(0,0,w,h);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#0b0b0b";
+      ctx.fillStyle = "rgba(0,0,0,.04)";
+
+      function roughLine(x1,y1,x2,y2,reps=3, jitter=2) {
+        for (let r=0; r<reps; r++) {
+          ctx.beginPath();
+          ctx.lineWidth = 1.1 + Math.random() * 1.2;
+          const dx1 = (Math.random()-.5)*jitter, dy1=(Math.random()-.5)*jitter;
+          const dx2 = (Math.random()-.5)*jitter, dy2=(Math.random()-.5)*jitter;
+          ctx.moveTo(x1+dx1,y1+dy1);
+          const cx = (x1+x2)/2 + (Math.random()-.5)*jitter*4;
+          const cy = (y1+y2)/2 + (Math.random()-.5)*jitter*4;
+          ctx.quadraticCurveTo(cx, cy, x2+dx2, y2+dy2);
+          ctx.stroke();
+        }
+      }
+      function roughRect(x,y,ww,hh) {
+        roughLine(x,y,x+ww,y,3,3);
+        roughLine(x+ww,y,x+ww,y+hh,3,3);
+        roughLine(x+ww,y+hh,x,y+hh,3,3);
+        roughLine(x,y+hh,x,y,3,3);
+      }
+      function roughText(txt,x,y,size=18,rot=0) {
+        ctx.save();
+        ctx.translate(x,y);
+        ctx.rotate(rot);
+        ctx.font = "900 " + size + "px Comic Sans MS, Bradley Hand, sans-serif";
+        ctx.fillStyle = "#0b0b0b";
+        ctx.fillText(txt,0,0);
+        ctx.restore();
+      }
+
+      const bx = w*.25, by = h*.16, bw = w*.42, bh = h*.68;
+      roughRect(bx, by, bw, bh);
+      roughLine(bx, by, bx+bw*.16, by-h*.08, 3, 4);
+      roughLine(bx+bw, by, bx+bw*.84, by-h*.08, 3, 4);
+      roughLine(bx+bw*.16, by-h*.08, bx+bw*.84, by-h*.08, 3, 4);
+      for (let i=0;i<5;i++) {
+        for (let j=0;j<4;j++) {
+          const x = bx + 25 + j*(bw-50)/3;
+          const y = by + 34 + i*(bh-85)/4;
+          roughRect(x, y, 28, 22);
+          if ((i+j)%3===0) {
+            roughLine(x+6,y+12,x+22,y+12,2,2);
+            roughLine(x+14,y+5,x+14,y+18,2,2);
+          }
+        }
+      }
+      roughRect(bx+bw*.42, by+bh-70, bw*.16, 70);
+      roughText("LEED?", bx+bw*.2, by+bh+34, 26, -.08);
+      roughText("WELL?", bx+bw*.57, by+bh+34, 24, .08);
+
+      for (let k=0;k<9;k++) {
+        const startX = bx+bw + 18 + k*4;
+        const amp = 16 + k*5;
+        ctx.beginPath();
+        ctx.lineWidth = 1.1 + k*.08;
+        for (let t=0;t<90;t++) {
+          const x = startX + t*2.7;
+          const y = by + bh*.35 + Math.sin(t/7 + k)*amp;
+          if (t===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+      roughText("NOISE", bx+bw+44, by+bh*.22, 42, -.08);
+      roughText("sound privacy", bx+bw+58, by+bh*.52, 20, .04);
+
+      roughLine(w*.08,h*.82,w*.92,h*.82,3,4);
+      roughText("badge points", w*.07, h*.09, 20, -.1);
+      roughText("occupant pain", w*.64, h*.91, 22, .06);
+      roughLine(w*.13,h*.13,w*.2,h*.16,2,4);
+      roughLine(w*.75,h*.86,w*.68,h*.78,2,4);
+
+      ctx.globalAlpha = .18;
+      for (let i=0;i<220;i++) {
+        ctx.beginPath();
+        ctx.arc(Math.random()*w, Math.random()*h, Math.random()*1.2, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    window.addEventListener("resize", () => {
+      window.clearTimeout(window.__sketchTimer);
+      window.__sketchTimer = window.setTimeout(drawSketch, 120);
+    });
+    fillTables();
+    drawSketch();
+  </script>
+</body>
+</html>

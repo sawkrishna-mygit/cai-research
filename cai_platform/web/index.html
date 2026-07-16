@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAI: Certification-Occupant Alignment Research</title>
+  <meta name="description" content="Research portfolio measuring alignment between green building certification points and occupant indoor environmental quality priorities.">
+  <meta property="og:title" content="CAI: Certification-Occupant Alignment Research">
+  <meta property="og:description" content="Do green building certifications allocate points toward what occupants actually need? Research across LEED, WELL, BREEAM, and Fitwel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sawkrishna-mygit.github.io/cai-research/">
+  <meta property="og:image" content="https://sawkrishna-mygit.github.io/cai-research/assets/figures/fig4_occupant_vs_cert.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <nav class="nav">
+      <div class="brand">CAI / research portfolio</div>
+      <div class="navlinks" aria-label="Page sections">
+        <a href="#methodology">Method</a>
+        <a href="#findings">Findings</a>
+        <a href="#figures">Figures</a>
+        <a href="#tool">Tool</a>
+        <a href="#about">About</a>
+        <a class="playground-btn" data-playground-link href="#" target="_blank" rel="noreferrer">Playground</a>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero-copy sketch-box">
+          <div class="eyebrow">Certification-Occupant Alignment (CAI) Research</div>
+          <h1>the <span class="scribble-under">quiet failure</span> of certification points</h1>
+          <p class="lead">
+            Green building certifications claim to optimize for occupant well-being. This research asks whether certification point allocations actually match occupant-identified indoor environmental quality priorities across LEED, WELL, BREEAM, and Fitwel.
+          </p>
+          <div class="thesis">
+            <div style="--r:-1.2deg"><strong>54%</strong><span>occupant acoustic dissatisfaction benchmark (CBE / Graham et al. 2021)</span></div>
+            <div style="--r:.9deg"><strong id="acCertStat">3.5%</strong><span>average certification point share given to acoustics across 13 versions</span></div>
+            <div style="--r:-.5deg"><strong id="avgTauStat">-0.575</strong><span>average Kendall tau-b across all certification systems analyzed</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual sketch-box" aria-label="Pencil drawing of noisy building">
+          <canvas id="sketchCanvas"></canvas>
+          <p class="caption">
+            A certified building can look clean on paper while sound privacy and thermal comfort remain the things occupants feel every day.
+          </p>
+        </div>
+      </section>
+
+      <div class="cta-banner sketch-box">
+        <h3>Run the full analysis engine — upload data, optimize allocations, export results</h3>
+        <a data-playground-link href="#" target="_blank" rel="noreferrer">Open Analysis Playground →</a>
+      </div>
+
+      <section id="methodology">
+        <div class="section-title">
+          <h2>Methodology</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="grid-2">
+          <div class="panel sketch-box">
+            <h3>Research question</h3>
+            <p>Do building certification systems allocate credits proportionally to occupant-identified needs?</p>
+            <p><strong>Hypothesis:</strong> Certification systems show systematic misalignment — negative correlation between point allocations and occupant complaint patterns.</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>Key metric</h3>
+            <p><strong>Kendall tau-b (τ):</strong> rank correlation between certification priorities and occupant priorities.</p>
+            <ul>
+              <li>τ = +1: perfect alignment</li>
+              <li>τ = 0: no relationship</li>
+              <li>τ = −1: perfect misalignment</li>
+            </ul>
+          </div>
+        </div>
+        <details class="methodology sketch-box" style="margin-top:18px">
+          <summary>Technical details (bootstrap CI, gap analysis, sensitivity)</summary>
+          <p>For each certification version, topics are ranked by points allocated and compared against occupant dissatisfaction rankings from 94,154 survey responses across 663 office buildings.</p>
+          <ul>
+            <li><strong>Bootstrap CI:</strong> 1,000 resamples quantify uncertainty in τ estimates (95% percentile intervals).</li>
+            <li><strong>Gap analysis:</strong> Gap(topic) = Certification%(topic) − Occupant%(topic). Negative gaps indicate under-allocation.</li>
+            <li><strong>Sensitivity:</strong> Spearman ρ confirms findings are robust across correlation metrics (r = 0.975 agreement).</li>
+            <li><strong>Trend testing:</strong> Linear regression of τ vs. year tests whether systems improve over time.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="problem">
+        <div class="section-title">
+          <h2>Start with noise</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="noise-strip">
+          <div class="big-number sketch-box">
+            <b>54%</b>
+            <span>Acoustic dissatisfaction is the loudest signal in the occupant-priority benchmark.</span>
+          </div>
+          <div class="bars sketch-box">
+            <div class="bar-row">
+              <div class="bar-label"><span>Occupants reporting acoustic dissatisfaction</span><span>54%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--w:54%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Average certification share for acoustics</span><span id="acCertLabel">3.5%</span></div>
+              <div class="bar-track"><div class="bar-fill light" id="acCertBar" style="--w:3.5%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Average acoustic allocation gap</span><span>-50.5%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="acGapBar" style="--w:50.5%"></div></div>
+            </div>
+            <p class="source-note">
+              The topic people complain about most is often one of the smallest point allocations — a −50.5% average gap across all systems.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="findings">
+        <div class="section-title">
+          <h2>Key findings</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="grid-3">
+          <div class="panel sketch-box">
+            <h3>1. Systematic misalignment</h3>
+            <p>All 13 certification versions show negative Kendall τ (−0.33 to −1.0). Systems allocate points in nearly the opposite order of occupant priorities.</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>2. LEED strongest case</h3>
+            <p>LEED versions range from τ = −0.913 to −1.0 (2009–2025). Acoustics receives ~0.9% of points while occupants report 54% dissatisfaction. No improvement over 16 years.</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>3. WELL improves</h3>
+            <p>WELL v1 (τ = −1.0) improved to WELL v2 (τ = −0.33) — the only system with significant temporal improvement. Still underweights acoustics (14.2% vs 54%).</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>4. BREEAM &amp; Fitwel</h3>
+            <p>BREEAM holds at τ = −0.18 across all versions with no improvement trend. Fitwel ranges from τ = −0.67 to −0.33, still severely under-allocating acoustics.</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>5. Acoustics universally under-weighted</h3>
+            <p>No system allocates proportionally to acoustic complaints. Gap ranking: Acoustics (−50.5%), Thermal (−35.9%), Lighting (−20.8%), Air (−12.1%).</p>
+          </div>
+          <div class="panel sketch-box">
+            <h3>Topic-level gaps</h3>
+            <ul>
+              <li>Acoustics: 54% occupant vs 3.5% cert avg</li>
+              <li>Thermal: 39% vs 3.1%</li>
+              <li>Lighting: 26% vs 5.2%</li>
+              <li>Air: 20% vs 7.9%</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="result-table sketch-box" style="margin-top:18px">
+          <table aria-label="CAI results table">
+            <thead>
+              <tr>
+                <th>System</th>
+                <th>Version</th>
+                <th>Year</th>
+                <th class="num">τ</th>
+                <th class="num">CI Lower</th>
+                <th class="num">CI Upper</th>
+                <th class="num">Acoustics gap</th>
+                <th class="num">Thermal gap</th>
+              </tr>
+            </thead>
+            <tbody id="summaryRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="figures">
+        <div class="section-title">
+          <h2>Publication figures</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="grid-4">
+          <figure class="figure-card sketch-box">
+            <img src="assets/figures/fig1_alignment_trajectories.png" alt="Alignment trajectories over time by certification system" loading="lazy">
+            <figcaption><strong>Figure 1:</strong> Kendall τ over time (2009–2026). WELL shows improvement v1→v2; LEED, BREEAM remain flat.</figcaption>
+          </figure>
+          <figure class="figure-card sketch-box">
+            <img src="assets/figures/fig2_topic_gaps.png" alt="Topic-level gaps for latest certification versions" loading="lazy">
+            <figcaption><strong>Figure 2:</strong> Topic-level gaps (Cert% − Occupant%) for latest versions. All topics under-allocated; acoustics most severe.</figcaption>
+          </figure>
+          <figure class="figure-card sketch-box">
+            <img src="assets/figures/fig3_heatmap_all_systems.png" alt="Heatmap of gaps across all systems and topics" loading="lazy">
+            <figcaption><strong>Figure 3:</strong> 13 × 4 gap heatmap. Consistent under-allocation pattern across the full matrix.</figcaption>
+          </figure>
+          <figure class="figure-card sketch-box">
+            <img src="assets/figures/fig4_occupant_vs_cert.png" alt="Occupant dissatisfaction vs certification emphasis" loading="lazy">
+            <figcaption><strong>Figure 4:</strong> Occupant dissatisfaction vs average certification emphasis. Massive gap on acoustics (54% vs ~3.5%).</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="tool">
+        <div class="section-title">
+          <h2>Interactive CAI calculator</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="tool-wrap">
+          <div class="panel sketch-box">
+            <h3>Certification inputs</h3>
+            <p class="small-note">Load a known system/version, then edit points to test a redesign scenario.</p>
+            <div class="control">
+              <label for="preset">Preset</label>
+              <select id="preset"></select>
+            </div>
+            <div class="mini-grid">
+              <div class="control"><label for="acPts">Acoustics</label><input id="acPts" type="number" step="0.01" min="0"></div>
+              <div class="control"><label for="thPts">Thermal</label><input id="thPts" type="number" step="0.01" min="0"></div>
+              <div class="control"><label for="liPts">Lighting</label><input id="liPts" type="number" step="0.01" min="0"></div>
+              <div class="control"><label for="airPts">Air</label><input id="airPts" type="number" step="0.01" min="0"></div>
+            </div>
+            <div class="control">
+              <label for="totalPts">System total</label>
+              <input id="totalPts" type="number" step="1" min="1">
+            </div>
+
+            <h3 style="margin-top:24px">Occupant benchmark</h3>
+            <div class="mini-grid">
+              <div class="control"><label for="acOcc">Acoustics %</label><input id="acOcc" type="number" step="1" min="0" max="100"></div>
+              <div class="control"><label for="thOcc">Thermal %</label><input id="thOcc" type="number" step="1" min="0" max="100"></div>
+              <div class="control"><label for="liOcc">Lighting %</label><input id="liOcc" type="number" step="1" min="0" max="100"></div>
+              <div class="control"><label for="airOcc">Air %</label><input id="airOcc" type="number" step="1" min="0" max="100"></div>
+            </div>
+          </div>
+
+          <div class="score-card sketch-box">
+            <div class="score-line">
+              <div class="tau" id="tauOut">-</div>
+              <div class="verdict" id="verdictOut">choose a system</div>
+            </div>
+            <p class="order-note" id="orderOut"></p>
+            <div class="gap-list" id="gapList"></div>
+            <p class="source-note" id="toolNote"></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="limitations">
+        <div class="section-title">
+          <h2>Limitations</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="grid-2">
+          <div class="panel sketch-box">
+            <h3>Scope constraints</h3>
+            <ul>
+              <li><strong>Single occupant source:</strong> CBE / Graham et al. 2021 — findings may not generalize to all populations.</li>
+              <li><strong>Four IEQ topics:</strong> Acoustics, Thermal, Lighting, Air — privacy, control, aesthetics excluded.</li>
+              <li><strong>Four certification systems:</strong> LEED, WELL, BREEAM, Fitwel — other systems not covered.</li>
+            </ul>
+          </div>
+          <div class="panel sketch-box">
+            <h3>Interpretation caveats</h3>
+            <ul>
+              <li><strong>Correlation, not causation:</strong> misalignment does not prove certifications cause dissatisfaction.</li>
+              <li><strong>Ordinal analysis:</strong> Kendall τ uses rankings, not absolute magnitudes.</li>
+              <li><strong>Small n:</strong> 4 topics limits statistical power; bootstrap CIs are wide.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="validation">
+        <div class="section-title">
+          <h2>Future validation</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="quote sketch-box">
+          CAI becomes much stronger when it predicts real post-occupancy satisfaction.
+          <span>Right now, it measures certification-design alignment. The next level is validation: compare CAI scores with actual satisfaction from real buildings.</span>
+        </div>
+        <div class="roadmap" style="margin-top:18px">
+          <div class="step sketch-box" style="--r:-1deg">
+            <h3>Published evidence</h3>
+            <p>Test whether CAI ordering agrees with reported satisfaction patterns from LEED/WELL comparison studies.</p>
+          </div>
+          <div class="step sketch-box" style="--r:.6deg">
+            <h3>De-identified data</h3>
+            <p>Request building-level aggregates from CBE / POE researchers for correlation testing.</p>
+          </div>
+          <div class="step sketch-box" style="--r:-.4deg">
+            <h3>Campus pilot</h3>
+            <p>Survey occupants in accessible certified buildings on acoustics, thermal, lighting, air, and overall satisfaction.</p>
+          </div>
+          <div class="step sketch-box" style="--r:.9deg">
+            <h3>Correlation test</h3>
+            <p>If higher CAI predicts higher satisfaction, the index becomes a validated instrument.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="section-title">
+          <h2>About the researcher</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="about-grid sketch-box">
+          <div class="about-photo" aria-hidden="true">VS</div>
+          <div class="about-meta">
+            <h3>Vaibhavi [Last Name]</h3>
+            <p class="role">Civil Architect &amp; Building Science Researcher</p>
+            <p>
+              This research investigates whether green building certifications deliver on their promise of occupant well-being. By quantifying the gap between certification point structures and occupant-identified indoor environmental quality priorities, CAI provides evidence-based guidance for architects, policymakers, and certification bodies.
+            </p>
+            <p>
+              The CAI Platform is open, reproducible, and designed to be challenged — better occupant data or credit extraction can be plugged in and the analysis rerun.
+            </p>
+            <div class="about-links">
+              <a href="mailto:your.email@example.com">Email</a>
+              <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noreferrer">ORCID</a>
+              <a data-github-link href="#" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="references">
+        <div class="section-title">
+          <h2>References</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="panel sketch-box">
+          <h3>Academic sources</h3>
+          <ul>
+            <li>Graham, R., et al. (2021). "A data-driven analysis of occupant satisfaction and indoor environmental quality." <em>Building and Environment</em>, 198, 107878. <a href="https://doi.org/10.1016/j.buildenv.2021.107878" target="_blank" rel="noreferrer">DOI</a></li>
+            <li>UC Berkeley Center for the Built Environment. <a href="https://www.cbe.berkeley.edu/research/occupant-survey/" target="_blank" rel="noreferrer">Occupant Survey Research</a></li>
+            <li>Kent, M.G., et al. (2024). WELL/LEED occupant satisfaction comparison. <a href="https://www.nature.com/articles/s41598-024-65624-z" target="_blank" rel="noreferrer">Scientific Reports</a></li>
+          </ul>
+          <h3 style="margin-top:20px">Certification system sources</h3>
+          <ul>
+            <li><a href="https://www.usgbc.org/credits" target="_blank" rel="noreferrer">LEED</a> — USGBC Official Scorecards (2009, v4, v4.1, v5)</li>
+            <li><a href="https://www.wellcertified.com/" target="_blank" rel="noreferrer">WELL</a> — IWBI Documentation (v1, v2)</li>
+            <li><a href="https://www.breeam.com/" target="_blank" rel="noreferrer">BREEAM</a> — BRE Global Technical Manuals (Intl v6/v7, USA In-Use v6, Residential Plus)</li>
+            <li><a href="https://www.fitwel.org/" target="_blank" rel="noreferrer">Fitwel</a> — Official Scorecards (v3 CI, MTWB+, MFR)</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      CAI Research Portfolio — Certification-Occupant Alignment Analysis. Scientific caveat: CAI measures rating-system design alignment; building-level predictive validation requires post-occupancy data. Built July 2026.
+      <br>
+      <a data-github-link href="#" target="_blank" rel="noreferrer">View on GitHub</a>
+      ·
+      <a data-playground-link href="#" target="_blank" rel="noreferrer">Analysis Playground</a>
+    </footer>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/cai-calculator.js"></script>
+</body>
+</html>

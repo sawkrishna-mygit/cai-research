@@ -1,0 +1,53 @@
+badge,system,version,year,topic,points,system_total,source
+LEED,LEED,2009,2009,Acoustics,0,110,USGBC Official Scorecard
+LEED,LEED,2009,2009,Thermal,3,110,USGBC Official Scorecard
+LEED,LEED,2009,2009,Lighting,3,110,USGBC Official Scorecard
+LEED,LEED,2009,2009,Air,9,110,USGBC Official Scorecard
+LEED,LEED,v4,2013,Acoustics,1,110,USGBC Official Scorecard
+LEED,LEED,v4,2013,Thermal,1,110,USGBC Official Scorecard
+LEED,LEED,v4,2013,Lighting,6,110,USGBC Official Scorecard
+LEED,LEED,v4,2013,Air,8,110,USGBC Official Scorecard
+LEED,LEED,v4.1,2019,Acoustics,1,110,USGBC Official Scorecard
+LEED,LEED,v4.1,2019,Thermal,1,110,USGBC Official Scorecard
+LEED,LEED,v4.1,2019,Lighting,6,110,USGBC Official Scorecard
+LEED,LEED,v4.1,2019,Air,8,110,USGBC Official Scorecard
+LEED,LEED,v5,2025,Acoustics,1,110,USGBC Official Scorecard
+LEED,LEED,v5,2025,Thermal,2,110,USGBC Official Scorecard
+LEED,LEED,v5,2025,Lighting,4,110,USGBC Official Scorecard
+LEED,LEED,v5,2025,Air,10,110,USGBC Official Scorecard
+WELL,WELL,v1,2014,Acoustics,7,100,WELL Building Standard v1
+WELL,WELL,v1,2014,Thermal,8,100,WELL Building Standard v1
+WELL,WELL,v1,2014,Lighting,10,100,WELL Building Standard v1
+WELL,WELL,v1,2014,Air,12,100,WELL Building Standard v1
+WELL,WELL,v2,2018,Acoustics,17,120,WELL Building Standard v2
+WELL,WELL,v2,2018,Thermal,12,120,WELL Building Standard v2
+WELL,WELL,v2,2018,Lighting,14,120,WELL Building Standard v2
+WELL,WELL,v2,2018,Air,28,120,WELL Building Standard v2
+BREEAM,BREEAM,Intl v6,2019,Acoustics,4,110,BREEAM International New Construction Version 6
+BREEAM,BREEAM,Intl v6,2019,Thermal,3,110,BREEAM International New Construction Version 6
+BREEAM,BREEAM,Intl v6,2019,Lighting,3,110,BREEAM International New Construction Version 6
+BREEAM,BREEAM,Intl v6,2019,Air,5,110,BREEAM International New Construction Version 6
+BREEAM,BREEAM,Intl v7,2023,Acoustics,4,110,BREEAM International New Construction Version 7
+BREEAM,BREEAM,Intl v7,2023,Thermal,3,110,BREEAM International New Construction Version 7
+BREEAM,BREEAM,Intl v7,2023,Lighting,3,110,BREEAM International New Construction Version 7
+BREEAM,BREEAM,Intl v7,2023,Air,7,110,BREEAM International New Construction Version 7
+BREEAM,BREEAM,USA In-Use v6,2021,Acoustics,4,110,BREEAM USA In-Use V6 Technical Standard Summary
+BREEAM,BREEAM,USA In-Use v6,2021,Thermal,3,110,BREEAM USA In-Use V6 Technical Standard Summary
+BREEAM,BREEAM,USA In-Use v6,2021,Lighting,3,110,BREEAM USA In-Use V6 Technical Standard Summary
+BREEAM,BREEAM,USA In-Use v6,2021,Air,5,110,BREEAM USA In-Use V6 Technical Standard Summary
+BREEAM,BREEAM,USA Residential Plus,2025,Acoustics,4,100,Intro to BREEAM USA Residential Plus
+BREEAM,BREEAM,USA Residential Plus,2025,Thermal,3,100,Intro to BREEAM USA Residential Plus
+BREEAM,BREEAM,USA Residential Plus,2025,Lighting,3,100,Intro to BREEAM USA Residential Plus
+BREEAM,BREEAM,USA Residential Plus,2025,Air,5,100,Intro to BREEAM USA Residential Plus
+Fitwel,Fitwel,v3 CI,2026,Acoustics,1.26,104,Fitwel v3 Commercial Interior Scorecard Q1 2026
+Fitwel,Fitwel,v3 CI,2026,Thermal,1.68,104,Fitwel v3 Commercial Interior Scorecard Q1 2026
+Fitwel,Fitwel,v3 CI,2026,Lighting,7.28,104,Fitwel v3 Commercial Interior Scorecard Q1 2026
+Fitwel,Fitwel,v3 CI,2026,Air,5.23,104,Fitwel v3 Commercial Interior Scorecard Q1 2026
+Fitwel,Fitwel,v3 MTWB,2026,Acoustics,2.94,110,Fitwel v3 MTWB+ Scorecard Q1 2026
+Fitwel,Fitwel,v3 MTWB,2026,Thermal,1.47,110,Fitwel v3 MTWB+ Scorecard Q1 2026
+Fitwel,Fitwel,v3 MTWB,2026,Lighting,5.51,110,Fitwel v3 MTWB+ Scorecard Q1 2026
+Fitwel,Fitwel,v3 MTWB,2026,Air,4.59,110,Fitwel v3 MTWB+ Scorecard Q1 2026
+Fitwel,Fitwel,v3 MFR,2026,Acoustics,3.85,120,Fitwel v3 Multifamily Residential Scorecard Q1 2026
+Fitwel,Fitwel,v3 MFR,2026,Thermal,1.40,120,Fitwel v3 Multifamily Residential Scorecard Q1 2026
+Fitwel,Fitwel,v3 MFR,2026,Lighting,7.00,120,Fitwel v3 Multifamily Residential Scorecard Q1 2026
+Fitwel,Fitwel,v3 MFR,2026,Air,7.70,120,Fitwel v3 Multifamily Residential Scorecard Q1 2026
