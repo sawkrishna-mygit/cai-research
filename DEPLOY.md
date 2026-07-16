@@ -60,6 +60,15 @@ git branch -M main
 git push -u origin main
 ```
 
+**Or use the helper script** (after creating the repo on GitHub):
+
+```bash
+./push_to_github.sh
+```
+
+If prompted for credentials, use a GitHub Personal Access Token (not password).
+Create one at: https://github.com/settings/tokens (scope: `repo`)
+
 ---
 
 ## Step 3 — Enable GitHub Pages
@@ -98,6 +107,8 @@ Verify workflow: https://github.com/sawkrishna-mygit/cai-research/actions
 | `CAI_PORTFOLIO_URL` | `https://sawkrishna-mygit.github.io/cai-research/` |
 
 7. Click **Deploy**
+
+See [STREAMLIT_CLOUD_SETUP.md](STREAMLIT_CLOUD_SETUP.md) for a printable checklist.
 
 First deploy takes 3–5 minutes. App URL: `https://cai-research-playground.streamlit.app`
 
