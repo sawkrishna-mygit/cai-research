@@ -30,7 +30,7 @@ git push -u origin main
 
 echo ""
 echo "Done! Next steps:"
-echo "  1. Enable GitHub Pages: repo Settings → Pages → Source: GitHub Actions"
+echo "  1. Enable GitHub Pages: repo Settings → Pages → Deploy from branch → main → /docs"
 echo "  2. Wait 2-3 min, then open: https://sawkrishna-mygit.github.io/cai-research/"
 echo "  3. Deploy Streamlit: see DEPLOY.md Step 4"
 echo ""

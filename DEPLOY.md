@@ -16,8 +16,8 @@ Deploy Vaibhavi's CAI research portfolio and Streamlit playground using the **sa
 
 The repo includes:
 
-- `cai_platform/web/` — static portfolio site
-- `.github/workflows/deploy-pages.yml` — auto-deploys portfolio on push to `main`
+- `cai_platform/web/` — source for the static portfolio site
+- `docs/` — copy of the portfolio for GitHub Pages branch deploy (sync with `./sync_docs.sh`)
 - `cai_platform/requirements-deploy.txt` — Streamlit Cloud dependencies
 - `cai_platform/web/js/config.js` — production/local URL switching
 
@@ -27,6 +27,8 @@ Regenerate data assets if needed:
 cd cai_platform
 python3 export_web_data.py
 python3 generate_figures.py
+cd ..
+./sync_docs.sh
 ```
 
 ---
@@ -74,11 +76,12 @@ Create one at: https://github.com/settings/tokens (scope: `repo`)
 ## Step 3 — Enable GitHub Pages
 
 1. Open https://github.com/sawkrishna-mygit/cai-research/settings/pages
-2. Under **Build and deployment** → Source: select **GitHub Actions**
-3. Push to `main` triggers the workflow automatically
-4. Wait 2–3 minutes; site goes live at https://sawkrishna-mygit.github.io/cai-research/
+2. Under **Build and deployment** → Source: select **Deploy from a branch**
+3. Branch: **main** → Folder: **/docs**
+4. Click **Save**
+5. Wait 2–3 minutes; site goes live at https://sawkrishna-mygit.github.io/cai-research/
 
-Verify workflow: https://github.com/sawkrishna-mygit/cai-research/actions
+**Note:** GitHub Pages branch deploy only serves from `/` or `/docs` at the repo root. The portfolio source lives in `cai_platform/web/`; `docs/` is a synced copy. After editing the portfolio, run `./sync_docs.sh` and push.
 
 ---
 
@@ -139,7 +142,7 @@ When you buy a domain (e.g. `vaibhavi.com`):
 1. GitHub repo → Settings → Pages → Custom domain → `cai.vaibhavi.com`
 2. At your registrar, add CNAME: `cai` → `sawkrishna-mygit.github.io`
 3. Update Streamlit secret `CAI_PORTFOLIO_URL` to `https://cai.vaibhavi.com/`
-4. Update `cai_platform/web/js/config.js` production `portfolioUrl`
+4. Update `cai_platform/web/js/config.js` production `portfolioUrl`, then run `./sync_docs.sh`
 
 No code rewrite required.
 
@@ -149,20 +152,23 @@ No code rewrite required.
 
 | Problem | Fix |
 |---------|-----|
-| GitHub Pages 404 | Ensure Pages source is **GitHub Actions**, not a branch |
-| Workflow failed | Check Actions tab; confirm `cai_platform/web/index.html` exists |
+| GitHub Pages 404 | Enable Pages: branch **main**, folder **/docs**; wait 2–3 min after push |
+| Portfolio outdated on live site | Run `./sync_docs.sh`, commit `docs/`, and push |
 | Streamlit import error | Confirm main file is `cai_platform/app_streamlit.py` |
 | Playground links go to localhost | You're viewing locally; production site uses `config.js` auto-detect |
-| Figures missing on live site | Run `python3 generate_figures.py` and push again |
+| Figures missing on live site | Run `python3 generate_figures.py`, then `./sync_docs.sh`, and push |
 
 ---
 
 ## Updating the live site
 
-Any push to `main` automatically redeploys the portfolio. Streamlit redeploys on push as well (if auto-redeploy is enabled in Streamlit Cloud settings).
+After editing `cai_platform/web/`, sync and push:
 
 ```bash
+./sync_docs.sh
 git add .
 git commit -m "Update research findings"
 git push
 ```
+
+GitHub Pages redeploys automatically on push to `main`. Streamlit redeploys on push as well (if auto-redeploy is enabled in Streamlit Cloud settings).
