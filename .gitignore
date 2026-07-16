@@ -24,3 +24,10 @@ Thumbs.db
 
 # Cursor
 .cursor/
+
+# Reference PDFs (too large for GitHub; keep locally)
+cai_platform/reference_documents/
+
+# Local gh CLI install
+.bin/
+cai_platform/.bin/
