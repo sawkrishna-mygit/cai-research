@@ -8,7 +8,7 @@ Complete these steps at https://share.streamlit.io while logged in as **sawkrish
 |-------|-------|
 | Repository | `sawkrishna-mygit/cai-research` |
 | Branch | `main` |
-| Main file path | `cai_platform/app_streamlit.py` |
+| Main file path | `streamlit_app.py` |
 | App URL (custom subdomain) | `cai-research-playground` |
 
 ## Advanced settings
@@ -16,7 +16,7 @@ Complete these steps at https://share.streamlit.io while logged in as **sawkrish
 | Field | Value |
 |-------|-------|
 | Python version | 3.11 |
-| Requirements file | `cai_platform/requirements-deploy.txt` |
+| Requirements file | `requirements.txt` (auto-detected at repo root) |
 
 ## Secrets (required)
 

@@ -96,12 +96,12 @@ Create one at: https://github.com/settings/tokens (scope: `repo`)
 |---------|-------|
 | Repository | `sawkrishna-mygit/cai-research` |
 | Branch | `main` |
-| Main file path | `cai_platform/app_streamlit.py` |
+| Main file path | `streamlit_app.py` |
 | App URL (optional) | `cai-research-playground` |
 
 5. Click **Advanced settings**:
    - Python version: 3.11
-   - Requirements file: `cai_platform/requirements-deploy.txt`
+   - Requirements file: `requirements.txt` (default at repo root)
 
 6. Under **Secrets**, add:
 
