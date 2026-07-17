@@ -1,0 +1,25 @@
+badge,system,version,year,track,topic,points,group_total,system_total,rows_included,has_prerequisite,has_measured_target,source
+LEED,LEED,2009,2009,New Construction,Acoustics,0.0,15,110,No Acoustic Performance credit,no,no,leed_2009.png
+LEED,LEED,2009,2009,New Construction,Air,11.0,15,110,Outdoor Air Delivery Monitoring (1) + Increased Ventilation (1) + Construction IAQ Management Plan (2) + Low-Emitting Materials (4) + Indoor Chemical & Pollutant Source Control (1) + Indoor Air Quality Management Before Occupancy (2),yes,yes,leed_2009.png
+LEED,LEED,2009,2009,New Construction,Lighting,3.0,15,110,Daylight & Views (2) + Controllability of Lighting (1),no,yes,leed_2009.png
+LEED,LEED,2009,2009,New Construction,Thermal,1.0,15,110,Thermal Comfort – Design,no,yes,leed_2009.png
+LEED,LEED,v4,2013,New Construction,Acoustics,1.0,16,110,Acoustic Performance,no,Yes,leed_v4.png
+LEED,LEED,v4,2013,New Construction,Air,8.0,16,110,Enhanced Indoor Air Quality Strategies (2) + Low-Emitting Materials (3) + Construction IAQ Management Plan (1) + Indoor Air Quality Assessment (2),yes,yes,leed_v4.png
+LEED,LEED,v4,2013,New Construction,Lighting,6.0,16,110,Interior Lighting (2) + Daylight (3) + Quality Views (1),no,yes,leed_v4.png
+LEED,LEED,v4,2013,New Construction,Thermal,1.0,16,110,Thermal Comfort,no,yes,leed_v4.png
+LEED,LEED,v4.1,2019,New Construction,Acoustics,1.0,16,110,Acoustic Performance ,no,yes,leed_v4.1.png
+LEED,LEED,v4.1,2019,New Construction,Air,8.0,16,110,Enhanced Indoor Air Quality Strategies (2) + Low-Emitting Materials (3) + Construction Indoor Air Quality Management Plan (1) + Indoor Air Quality Assessment (2),yes,yes,leed_v4.1.png
+LEED,LEED,v4.1,2019,New Construction,Lighting,6.0,16,110,Interior Lighting(2)+ Daylight(3)+ Quality Views (1),no,yes,leed_v4.1.png
+LEED,LEED,v4.1,2019,New Construction,Thermal,1.0,16,110,Thermal Comfort,no,yes,leed_v4.1.png
+LEED,LEED,v5,2025,New Construction,Acoustics,3.3333333333333335,13,110,EQc Occupant expericence,no,yes,leed_v5.pdf
+LEED,LEED,v5,2025,New Construction,Air,3.0,13,110,EQc Enhanced Air Quality+ EQc Air Quality Testing and Monitoring ,yes,yes,leed_v5.pdf
+LEED,LEED,v5,2025,New Construction,Lighting,3.3333333333333335,13,110,EQc Occupant expericence(Interior Lighting+ Daylight+ Quality Views),no,yes,leed_v5.pdf
+LEED,LEED,v5,2025,New Construction,Thermal,3.3333333333333335,13,110,EQc Occupant expericence,no,yes,leed_v5.pdf
+WELL,WELL,v1,2014,-,Acoustics,4.0,4,59,Features 78–81,yes,yes,well_v1_air.png
+WELL,WELL,v1,2014,-,Air,17.0,17,59,Features 13–29,Yes,yes,well_v1_air.png
+WELL,WELL,v1,2014,-,Lighting,7.0,7,59,Features 57–63,Yes ,yes,well_v1_air.png
+WELL,WELL,v1,2014,-,Thermal,2.0,2,59,Features 82–83,Yes,yes,well_v1_air.png
+WELL,WELL,v2,2025,-,Acoustics,11.0,11,110,S02+S03+S04+S05+S06+S07+S08; S01 is a precondition worth 0,yes (S01),yes,well_v2_air.png
+WELL,WELL,v2,2025,-,Air,18.0,18,110,A03+A04+A05+A06+A07+A08+A09+A10+A11+A12+A13+A14; A01 and A02 are preconditions worth 0,"yes (A01, A02)",yes,well_v2_air.png
+WELL,WELL,v2,2025,-,Lighting,14.0,14,110,L02+L04+L05+L06+L07+ L08+L09; L01 and L03 are preconditons worth 0,"yes(L01,L03)",yes,well_v2_air.png
+WELL,WELL,v2,2025,-,Thermal,12.0,12,110,T02+T03+T04+T05+T06+T07; T01 is a precondition worth 0 ,yes (T01),yes,well_v2_air.png

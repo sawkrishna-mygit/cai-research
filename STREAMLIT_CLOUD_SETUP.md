@@ -37,6 +37,6 @@ CAI_PORTFOLIO_URL = "https://sawkrishna-mygit.github.io/cai-research/"
 ## If the app fails to start
 
 1. Check logs in Streamlit Cloud dashboard
-2. Confirm `cai_platform/data/certification_points_complete.csv` exists in repo
+2. Confirm `cai_platform/data/certification_points.csv` exists in repo
 3. Confirm requirements file path is `cai_platform/requirements-deploy.txt`
 4. Redeploy from the Streamlit dashboard

@@ -24,6 +24,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from io import StringIO
 from cai_core import CAIAnalyzer, CAIOptimizer
+from cert_data_loader import load_certification_data
 
 PORTFOLIO_URL = os.environ.get(
     "CAI_PORTFOLIO_URL",
@@ -73,7 +74,7 @@ mode = st.sidebar.radio("Select Mode", ["Analyze", "Predict & Optimize"])
 
 @st.cache_data
 def get_sample_data():
-    cert_df = pd.read_csv(PLATFORM_ROOT / 'data' / 'certification_points_complete.csv')
+    cert_df = load_certification_data(PLATFORM_ROOT / 'data' / 'certification_points.csv')
     with open(PLATFORM_ROOT / 'data' / 'occupant_data.json') as f:
         occupant_data = json.load(f)
     return cert_df, occupant_data
@@ -101,10 +102,18 @@ if mode == "Analyze":
         if use_sample:
             cert_data = cert_data_sample
             occupant_data = occupant_dict_sample
-            st.info("Using sample data: LEED, WELL, BREEAM, Fitwel (13 versions)")
+            n_versions = cert_data.groupby(["system", "version"]).ngroups
+            st.info(
+                f"Using sample data: {cert_data['system'].nunique()} systems, {n_versions} versions"
+            )
         else:
             if cert_file and occ_file:
-                cert_data = pd.read_csv(cert_file)
+                uploaded = pd.read_csv(cert_file)
+                uploaded.columns = [col.strip() for col in uploaded.columns]
+                if "Badge" in uploaded.columns:
+                    cert_data = load_certification_data(uploaded)
+                else:
+                    cert_data = uploaded
                 if occ_file.name.endswith('.json'):
                     occupant_data = json.load(occ_file)
                 else:

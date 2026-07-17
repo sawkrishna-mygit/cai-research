@@ -25,6 +25,8 @@ Regenerate data assets if needed:
 
 ```bash
 cd cai_platform
+# Place updated source at data/certification_points_raw.csv, then:
+python3 cert_data_loader.py
 python3 export_web_data.py
 python3 generate_figures.py
 cd ..
@@ -154,9 +156,10 @@ No code rewrite required.
 |---------|-----|
 | GitHub Pages 404 | Enable Pages: branch **main**, folder **/docs**; wait 2–3 min after push |
 | Portfolio outdated on live site | Run `./sync_docs.sh`, commit `docs/`, and push |
-| Streamlit import error | Confirm main file is `cai_platform/app_streamlit.py` |
+| Streamlit import error | Confirm main file is `streamlit_app.py` |
 | Playground links go to localhost | You're viewing locally; production site uses `config.js` auto-detect |
 | Figures missing on live site | Run `python3 generate_figures.py`, then `./sync_docs.sh`, and push |
+| Update certification data | Replace `cai_platform/data/certification_points_raw.csv`, run `python3 cert_data_loader.py`, then `export_web_data.py` and `generate_figures.py` |
 
 ---
 

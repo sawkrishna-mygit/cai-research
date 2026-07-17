@@ -36,12 +36,12 @@
           <div class="eyebrow">Certification-Occupant Alignment (CAI) Research</div>
           <h1>the <span class="scribble-under">quiet failure</span> of certification points</h1>
           <p class="lead">
-            Green building certifications claim to optimize for occupant well-being. This research asks whether certification point allocations actually match occupant-identified indoor environmental quality priorities across LEED, WELL, BREEAM, and Fitwel.
+            Green building certifications claim to optimize for occupant well-being. This research asks whether certification point allocations actually match occupant-identified indoor environmental quality priorities across LEED and WELL (current dataset).
           </p>
           <div class="thesis">
             <div style="--r:-1.2deg"><strong>54%</strong><span>occupant acoustic dissatisfaction benchmark (CBE / Graham et al. 2021)</span></div>
-            <div style="--r:.9deg"><strong id="acCertStat">3.5%</strong><span>average certification point share given to acoustics across 13 versions</span></div>
-            <div style="--r:-.5deg"><strong id="avgTauStat">-0.575</strong><span>average Kendall tau-b across all certification systems analyzed</span></div>
+            <div style="--r:.9deg"><strong id="acCertStat">3.6%</strong><span>average certification point share given to acoustics across 6 versions</span></div>
+            <div style="--r:-.5deg"><strong id="avgTauStat">-0.631</strong><span>average Kendall tau-b across all certification systems analyzed</span></div>
           </div>
         </div>
 
@@ -111,11 +111,11 @@
               <div class="bar-track"><div class="bar-fill light" id="acCertBar" style="--w:3.5%"></div></div>
             </div>
             <div class="bar-row">
-              <div class="bar-label"><span>Average acoustic allocation gap</span><span>-50.5%</span></div>
-              <div class="bar-track"><div class="bar-fill" id="acGapBar" style="--w:50.5%"></div></div>
+              <div class="bar-label"><span>Average acoustic allocation gap</span><span id="acGapLabel">-50.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="acGapBar" style="--w:50.4%"></div></div>
             </div>
             <p class="source-note">
-              The topic people complain about most is often one of the smallest point allocations — a −50.5% average gap across all systems.
+              The topic people complain about most is often one of the smallest point allocations — a −50.4% average gap across analyzed versions.
             </p>
           </div>
         </div>
@@ -129,31 +129,31 @@
         <div class="grid-3">
           <div class="panel sketch-box">
             <h3>1. Systematic misalignment</h3>
-            <p>All 13 certification versions show negative Kendall τ (−0.33 to −1.0). Systems allocate points in nearly the opposite order of occupant priorities.</p>
+            <p>Five of six analyzed versions show negative Kendall τ. Systems often allocate points in nearly the opposite order of occupant priorities.</p>
           </div>
           <div class="panel sketch-box">
             <h3>2. LEED strongest case</h3>
-            <p>LEED versions range from τ = −0.913 to −1.0 (2009–2025). Acoustics receives ~0.9% of points while occupants report 54% dissatisfaction. No improvement over 16 years.</p>
+            <p>LEED 2009 through v4.1 range from τ = −0.91 to −1.0. Acoustics receives under 1% of points while occupants report 54% dissatisfaction. LEED v5 bundles IEQ topics, producing a different allocation pattern.</p>
           </div>
           <div class="panel sketch-box">
-            <h3>3. WELL improves</h3>
-            <p>WELL v1 (τ = −1.0) improved to WELL v2 (τ = −0.33) — the only system with significant temporal improvement. Still underweights acoustics (14.2% vs 54%).</p>
+            <h3>3. WELL shifts over time</h3>
+            <p>WELL v1 (τ = −0.67) and WELL v2 (τ = −1.0) both underweight acoustics relative to occupant complaints (10.0% vs 54%). Air quality receives the largest WELL v2 share (16.4%).</p>
           </div>
           <div class="panel sketch-box">
-            <h3>4. BREEAM &amp; Fitwel</h3>
-            <p>BREEAM holds at τ = −0.18 across all versions with no improvement trend. Fitwel ranges from τ = −0.67 to −0.33, still severely under-allocating acoustics.</p>
+            <h3>4. Dataset scope</h3>
+            <p>Current analysis covers LEED (2009, v4, v4.1, v5) and WELL (v1, v2) from the updated certification_points source file. BREEAM and Fitwel can be added as additional rows are extracted.</p>
           </div>
           <div class="panel sketch-box">
             <h3>5. Acoustics universally under-weighted</h3>
-            <p>No system allocates proportionally to acoustic complaints. Gap ranking: Acoustics (−50.5%), Thermal (−35.9%), Lighting (−20.8%), Air (−12.1%).</p>
+            <p>No version allocates proportionally to acoustic complaints. Gap ranking: Acoustics (−50.4%), Thermal (−35.7%), Lighting (−19.1%), Air (−7.9%).</p>
           </div>
           <div class="panel sketch-box">
             <h3>Topic-level gaps</h3>
             <ul>
-              <li>Acoustics: 54% occupant vs 3.5% cert avg</li>
-              <li>Thermal: 39% vs 3.1%</li>
-              <li>Lighting: 26% vs 5.2%</li>
-              <li>Air: 20% vs 7.9%</li>
+              <li>Acoustics: 54% occupant vs 3.6% cert avg</li>
+              <li>Thermal: 39% vs 3.3%</li>
+              <li>Lighting: 26% vs 6.9%</li>
+              <li>Air: 20% vs 12.1%</li>
             </ul>
           </div>
         </div>
@@ -185,7 +185,7 @@
         <div class="grid-4">
           <figure class="figure-card sketch-box">
             <img src="assets/figures/fig1_alignment_trajectories.png" alt="Alignment trajectories over time by certification system" loading="lazy">
-            <figcaption><strong>Figure 1:</strong> Kendall τ over time (2009–2026). WELL shows improvement v1→v2; LEED, BREEAM remain flat.</figcaption>
+            <figcaption><strong>Figure 1:</strong> Kendall τ over time (2009–2025). LEED remains strongly misaligned; WELL v2 shifts allocation toward air quality.</figcaption>
           </figure>
           <figure class="figure-card sketch-box">
             <img src="assets/figures/fig2_topic_gaps.png" alt="Topic-level gaps for latest certification versions" loading="lazy">
@@ -193,7 +193,7 @@
           </figure>
           <figure class="figure-card sketch-box">
             <img src="assets/figures/fig3_heatmap_all_systems.png" alt="Heatmap of gaps across all systems and topics" loading="lazy">
-            <figcaption><strong>Figure 3:</strong> 13 × 4 gap heatmap. Consistent under-allocation pattern across the full matrix.</figcaption>
+            <figcaption><strong>Figure 3:</strong> 6 × 4 gap heatmap. Consistent under-allocation pattern across LEED and WELL versions.</figcaption>
           </figure>
           <figure class="figure-card sketch-box">
             <img src="assets/figures/fig4_occupant_vs_cert.png" alt="Occupant dissatisfaction vs certification emphasis" loading="lazy">
@@ -258,7 +258,7 @@
             <ul>
               <li><strong>Single occupant source:</strong> CBE / Graham et al. 2021 — findings may not generalize to all populations.</li>
               <li><strong>Four IEQ topics:</strong> Acoustics, Thermal, Lighting, Air — privacy, control, aesthetics excluded.</li>
-              <li><strong>Four certification systems:</strong> LEED, WELL, BREEAM, Fitwel — other systems not covered.</li>
+              <li><strong>Certification systems in dataset:</strong> LEED and WELL (6 versions); BREEAM and Fitwel not yet in the updated source file.</li>
             </ul>
           </div>
           <div class="panel sketch-box">

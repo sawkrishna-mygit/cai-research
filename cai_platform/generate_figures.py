@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from cert_data_loader import load_certification_data
 from cai_core import CAIAnalyzer
 
 ROOT = Path(__file__).resolve().parent
@@ -22,7 +23,7 @@ MARKERS = {"LEED": "o", "WELL": "s", "BREEAM": "^", "Fitwel": "D"}
 
 
 def load_analyzer():
-    cert_df = pd.read_csv(DATA_DIR / "certification_points_complete.csv")
+    cert_df = load_certification_data(DATA_DIR / "certification_points.csv")
     with open(DATA_DIR / "occupant_data.json") as f:
         occupant_data = json.load(f)
     analyzer = CAIAnalyzer(cert_df, occupant_data)

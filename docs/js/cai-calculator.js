@@ -188,6 +188,8 @@ function updateSummaryStats() {
   if (acGapBar) acGapBar.style.setProperty("--w", Math.abs(gaps.Acoustics.avg_gap) + "%");
   const acLabel = el("acCertLabel");
   if (acLabel) acLabel.textContent = gaps.Acoustics.cert_pct.toFixed(1) + "%";
+  const acGapLabel = el("acGapLabel");
+  if (acGapLabel) acGapLabel.textContent = gaps.Acoustics.avg_gap.toFixed(1) + "%";
 }
 
 function drawSketch() {
