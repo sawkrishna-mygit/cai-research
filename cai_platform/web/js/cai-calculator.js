@@ -104,6 +104,7 @@ function calc() {
     if (gap < pct[worstIndex] - occ[worstIndex]) worstIndex = i;
     const row = document.createElement("div");
     row.className = "gap-item";
+    row.dataset.topic = topicKeys[i];
     row.innerHTML =
       "<b>" +
       name +
@@ -204,29 +205,31 @@ function drawSketch() {
   const w = rect.width;
   const h = rect.height;
   ctx.clearRect(0, 0, w, h);
+  const palette = ["#e85d4c", "#e6a817", "#2b59c3", "#3d9970", "#b83dba", "#1faeba", "#7c5cbf"];
   ctx.lineCap = "square";
   ctx.lineJoin = "miter";
-  ctx.strokeStyle = "#141414";
-  ctx.fillStyle = "rgba(20,20,20,.04)";
+  ctx.strokeStyle = "#2b59c3";
+  ctx.fillStyle = "rgba(43, 89, 195, 0.06)";
 
-  function line(x1, y1, x2, y2, width = 1) {
+  function line(x1, y1, x2, y2, width = 1, color = "#2b59c3") {
     ctx.beginPath();
     ctx.lineWidth = width;
+    ctx.strokeStyle = color;
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
   }
 
-  function rect(x, y, ww, hh, width = 1) {
-    line(x, y, x + ww, y, width);
-    line(x + ww, y, x + ww, y + hh, width);
-    line(x + ww, y + hh, x, y + hh, width);
-    line(x, y + hh, x, y, width);
+  function rect(x, y, ww, hh, width = 1, color = "#2b59c3") {
+    line(x, y, x + ww, y, width, color);
+    line(x + ww, y, x + ww, y + hh, width, color);
+    line(x + ww, y + hh, x, y + hh, width, color);
+    line(x, y + hh, x, y, width, color);
   }
 
-  function label(txt, x, y, size = 11, weight = "500") {
+  function label(txt, x, y, size = 11, weight = "500", color = "#141414") {
     ctx.font = weight + " " + size + "px IBM Plex Mono, ui-monospace, monospace";
-    ctx.fillStyle = "#141414";
+    ctx.fillStyle = color;
     ctx.fillText(txt, x, y);
   }
 
@@ -243,20 +246,22 @@ function drawSketch() {
     for (let j = 0; j < 4; j++) {
       const x = bx + 24 + (j * (bw - 48)) / 3;
       const y = by + 32 + (i * (bh - 78)) / 4;
-      rect(x, y, 28, 22, 0.8);
+      const winColor = j % 2 === 0 ? "#e6a817" : "#3d9970";
+      rect(x, y, 28, 22, 0.8, winColor);
     }
   }
-  rect(bx + bw * 0.42, by + bh - 68, bw * 0.16, 68, 1);
+  rect(bx + bw * 0.42, by + bh - 68, bw * 0.16, 68, 1, "#b83dba");
 
-  label("PLAN — CERTIFIED BUILDING", bx, by - 18, 10);
-  label("LEED / WELL", bx + bw * 0.18, by + bh + 28, 12, "600");
-  label("ACOUSTIC FIELD", bx + bw + 28, by + 24, 10);
+  label("PLAN — CERTIFIED BUILDING", bx, by - 18, 10, "500", "#2b59c3");
+  label("LEED / WELL", bx + bw * 0.18, by + bh + 28, 12, "600", "#3d9970");
+  label("ACOUSTIC FIELD", bx + bw + 28, by + 24, 10, "500", "#e85d4c");
 
   for (let k = 0; k < 7; k++) {
     const startX = bx + bw + 24 + k * 5;
     const amp = 12 + k * 4;
     ctx.beginPath();
     ctx.lineWidth = 0.8 + k * 0.05;
+    ctx.strokeStyle = palette[k % palette.length];
     for (let t = 0; t < 90; t++) {
       const x = startX + t * 2.5;
       const y = by + bh * 0.38 + Math.sin(t / 6 + k) * amp;
@@ -266,14 +271,14 @@ function drawSketch() {
     ctx.stroke();
   }
 
-  label("NOISE", bx + bw + 42, by + bh * 0.24, 22, "600");
-  label("sound privacy", bx + bw + 42, by + bh * 0.52, 10);
+  label("NOISE", bx + bw + 42, by + bh * 0.24, 22, "600", "#e85d4c");
+  label("sound privacy", bx + bw + 42, by + bh * 0.52, 10, "500", "#b83dba");
 
-  line(w * 0.08, h * 0.84, w * 0.92, h * 0.84, 0.6);
-  label("badge points", w * 0.08, h * 0.1, 10);
-  label("occupant pain", w * 0.62, h * 0.9, 10);
-  line(w * 0.12, h * 0.12, w * 0.18, h * 0.16, 0.6);
-  line(w * 0.72, h * 0.86, w * 0.66, h * 0.78, 0.6);
+  line(w * 0.08, h * 0.84, w * 0.92, h * 0.84, 0.6, "#e6a817");
+  label("badge points", w * 0.08, h * 0.1, 10, "500", "#2b59c3");
+  label("occupant pain", w * 0.62, h * 0.9, 10, "500", "#e85d4c");
+  line(w * 0.12, h * 0.12, w * 0.18, h * 0.16, 0.6, "#3d9970");
+  line(w * 0.72, h * 0.86, w * 0.66, h * 0.78, 0.6, "#e85d4c");
 }
 
 async function initCAI() {
