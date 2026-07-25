@@ -204,94 +204,76 @@ function drawSketch() {
   const w = rect.width;
   const h = rect.height;
   ctx.clearRect(0, 0, w, h);
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = "#0b0b0b";
-  ctx.fillStyle = "rgba(0,0,0,.04)";
+  ctx.lineCap = "square";
+  ctx.lineJoin = "miter";
+  ctx.strokeStyle = "#141414";
+  ctx.fillStyle = "rgba(20,20,20,.04)";
 
-  function roughLine(x1, y1, x2, y2, reps = 3, jitter = 2) {
-    for (let r = 0; r < reps; r++) {
-      ctx.beginPath();
-      ctx.lineWidth = 1.1 + Math.random() * 1.2;
-      const dx1 = (Math.random() - 0.5) * jitter;
-      const dy1 = (Math.random() - 0.5) * jitter;
-      const dx2 = (Math.random() - 0.5) * jitter;
-      const dy2 = (Math.random() - 0.5) * jitter;
-      ctx.moveTo(x1 + dx1, y1 + dy1);
-      const cx = (x1 + x2) / 2 + (Math.random() - 0.5) * jitter * 4;
-      const cy = (y1 + y2) / 2 + (Math.random() - 0.5) * jitter * 4;
-      ctx.quadraticCurveTo(cx, cy, x2 + dx2, y2 + dy2);
-      ctx.stroke();
-    }
-  }
-  function roughRect(x, y, ww, hh) {
-    roughLine(x, y, x + ww, y, 3, 3);
-    roughLine(x + ww, y, x + ww, y + hh, 3, 3);
-    roughLine(x + ww, y + hh, x, y + hh, 3, 3);
-    roughLine(x, y + hh, x, y, 3, 3);
-  }
-  function roughText(txt, x, y, size = 18, rot = 0) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(rot);
-    ctx.font = "900 " + size + "px Caveat, Patrick Hand, sans-serif";
-    ctx.fillStyle = "#0b0b0b";
-    ctx.fillText(txt, 0, 0);
-    ctx.restore();
+  function line(x1, y1, x2, y2, width = 1) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
   }
 
-  const bx = w * 0.25;
-  const by = h * 0.16;
-  const bw = w * 0.42;
-  const bh = h * 0.68;
-  roughRect(bx, by, bw, bh);
-  roughLine(bx, by, bx + bw * 0.16, by - h * 0.08, 3, 4);
-  roughLine(bx + bw, by, bx + bw * 0.84, by - h * 0.08, 3, 4);
-  roughLine(bx + bw * 0.16, by - h * 0.08, bx + bw * 0.84, by - h * 0.08, 3, 4);
+  function rect(x, y, ww, hh, width = 1) {
+    line(x, y, x + ww, y, width);
+    line(x + ww, y, x + ww, y + hh, width);
+    line(x + ww, y + hh, x, y + hh, width);
+    line(x, y + hh, x, y, width);
+  }
+
+  function label(txt, x, y, size = 11, weight = "500") {
+    ctx.font = weight + " " + size + "px IBM Plex Mono, ui-monospace, monospace";
+    ctx.fillStyle = "#141414";
+    ctx.fillText(txt, x, y);
+  }
+
+  const bx = w * 0.22;
+  const by = h * 0.18;
+  const bw = w * 0.44;
+  const bh = h * 0.62;
+  rect(bx, by, bw, bh, 1.2);
+  line(bx, by, bx + bw * 0.16, by - h * 0.07, 1);
+  line(bx + bw, by, bx + bw * 0.84, by - h * 0.07, 1);
+  line(bx + bw * 0.16, by - h * 0.07, bx + bw * 0.84, by - h * 0.07, 1);
+
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 4; j++) {
-      const x = bx + 25 + (j * (bw - 50)) / 3;
-      const y = by + 34 + (i * (bh - 85)) / 4;
-      roughRect(x, y, 28, 22);
-      if ((i + j) % 3 === 0) {
-        roughLine(x + 6, y + 12, x + 22, y + 12, 2, 2);
-        roughLine(x + 14, y + 5, x + 14, y + 18, 2, 2);
-      }
+      const x = bx + 24 + (j * (bw - 48)) / 3;
+      const y = by + 32 + (i * (bh - 78)) / 4;
+      rect(x, y, 28, 22, 0.8);
     }
   }
-  roughRect(bx + bw * 0.42, by + bh - 70, bw * 0.16, 70);
-  roughText("LEED?", bx + bw * 0.2, by + bh + 34, 26, -0.08);
-  roughText("WELL?", bx + bw * 0.57, by + bh + 34, 24, 0.08);
+  rect(bx + bw * 0.42, by + bh - 68, bw * 0.16, 68, 1);
 
-  for (let k = 0; k < 9; k++) {
-    const startX = bx + bw + 18 + k * 4;
-    const amp = 16 + k * 5;
+  label("PLAN — CERTIFIED BUILDING", bx, by - 18, 10);
+  label("LEED / WELL", bx + bw * 0.18, by + bh + 28, 12, "600");
+  label("ACOUSTIC FIELD", bx + bw + 28, by + 24, 10);
+
+  for (let k = 0; k < 7; k++) {
+    const startX = bx + bw + 24 + k * 5;
+    const amp = 12 + k * 4;
     ctx.beginPath();
-    ctx.lineWidth = 1.1 + k * 0.08;
+    ctx.lineWidth = 0.8 + k * 0.05;
     for (let t = 0; t < 90; t++) {
-      const x = startX + t * 2.7;
-      const y = by + bh * 0.35 + Math.sin(t / 7 + k) * amp;
+      const x = startX + t * 2.5;
+      const y = by + bh * 0.38 + Math.sin(t / 6 + k) * amp;
       if (t === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
     ctx.stroke();
   }
-  roughText("NOISE", bx + bw + 44, by + bh * 0.22, 42, -0.08);
-  roughText("sound privacy", bx + bw + 58, by + bh * 0.52, 20, 0.04);
 
-  roughLine(w * 0.08, h * 0.82, w * 0.92, h * 0.82, 3, 4);
-  roughText("badge points", w * 0.07, h * 0.09, 20, -0.1);
-  roughText("occupant pain", w * 0.64, h * 0.91, 22, 0.06);
-  roughLine(w * 0.13, h * 0.13, w * 0.2, h * 0.16, 2, 4);
-  roughLine(w * 0.75, h * 0.86, w * 0.68, h * 0.78, 2, 4);
+  label("NOISE", bx + bw + 42, by + bh * 0.24, 22, "600");
+  label("sound privacy", bx + bw + 42, by + bh * 0.52, 10);
 
-  ctx.globalAlpha = 0.18;
-  for (let i = 0; i < 220; i++) {
-    ctx.beginPath();
-    ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 1.2, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
+  line(w * 0.08, h * 0.84, w * 0.92, h * 0.84, 0.6);
+  label("badge points", w * 0.08, h * 0.1, 10);
+  label("occupant pain", w * 0.62, h * 0.9, 10);
+  line(w * 0.12, h * 0.12, w * 0.18, h * 0.16, 0.6);
+  line(w * 0.72, h * 0.86, w * 0.66, h * 0.78, 0.6);
 }
 
 async function initCAI() {
