@@ -29,7 +29,7 @@ from cert_pdf_extractor import analyze_pdf, infer_metadata_from_filename
 
 PORTFOLIO_URL = os.environ.get(
     "CAI_PORTFOLIO_URL",
-    "https://sawkrishna-mygit.github.io/cai-research/",
+    "https://saw-vaibhavi.github.io/cai-research/",
 )
 
 st.set_page_config(
@@ -38,6 +38,28 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+
+def _query_param(name, default=None):
+    if hasattr(st, "query_params"):
+        value = st.query_params.get(name)
+        return value if value is not None else default
+    params = st.experimental_get_query_params()
+    values = params.get(name, [])
+    return values[0] if values else default
+
+
+if _query_param("playground") != "1":
+    st.markdown(
+        f'<meta http-equiv="refresh" content="0;url={PORTFOLIO_URL}">'
+        f'<script>window.location.replace("{PORTFOLIO_URL}");</script>',
+        unsafe_allow_html=True,
+    )
+    st.info(
+        "The main site with **CAI Research** and **Architecture Portfolio** tabs lives on GitHub Pages. "
+        f"If you are not redirected automatically, [open the portfolio home]({PORTFOLIO_URL})."
+    )
+    st.stop()
 
 st.markdown("""
 <style>
@@ -56,7 +78,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown(
-    f'<a class="portfolio-link" href="{PORTFOLIO_URL}" target="_self">← Back to Research Portfolio</a>',
+    f'<a class="portfolio-link" href="{PORTFOLIO_URL}" target="_self">← Back to Portfolio Home</a>',
     unsafe_allow_html=True
 )
 

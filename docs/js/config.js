@@ -6,14 +6,14 @@ const CAI_CONFIG = (() => {
     location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
   const PRODUCTION = {
-    portfolioUrl: "https://sawkrishna-mygit.github.io/cai-research/",
-    playgroundUrl: "https://cai-research-playground.streamlit.app",
-    githubUrl: "https://github.com/sawkrishna-mygit/cai-research",
+    portfolioUrl: "https://saw-vaibhavi.github.io/cai-research/",
+    playgroundUrl: "https://cai-research-playground.streamlit.app/?playground=1",
+    githubUrl: "https://github.com/saw-vaibhavi/cai-research",
   };
 
   const LOCAL = {
-    portfolioUrl: "http://localhost:8080/",
-    playgroundUrl: "http://localhost:8501",
+    portfolioUrl: "http://127.0.0.1:8092/",
+    playgroundUrl: "http://localhost:8501/?playground=1",
     githubUrl: PRODUCTION.githubUrl,
   };
 
