@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=colors1">
+  <link rel="stylesheet" href="css/styles.css?v=portfolio5">
 </head>
 <body>
   <div class="page">
     <nav class="nav">
       <div class="brand">CAI Studio<span class="brand-sub">Building Science Research</span></div>
-      <div class="navlinks" aria-label="Page sections">
+      <div class="navlinks navlinks-research" aria-label="Research sections">
         <a href="#methodology">Method</a>
         <a href="#findings">Findings</a>
         <a href="#figures">Figures</a>
@@ -28,8 +28,19 @@
         <a href="#about">About</a>
         <a class="playground-btn" data-playground-link href="#" target="_blank" rel="noreferrer">Playground</a>
       </div>
+      <div class="navlinks navlinks-portfolio" aria-label="Portfolio sections" hidden>
+        <a href="#portfolio-about">About Me</a>
+        <a href="#portfolio-projects">Projects</a>
+        <a class="playground-btn" data-playground-link href="#" target="_blank" rel="noreferrer">Playground</a>
+      </div>
     </nav>
 
+    <div class="portal-tabs" role="tablist" aria-label="Portal views">
+      <button class="portal-tab active" type="button" role="tab" data-tab="research" aria-selected="true">CAI Research</button>
+      <button class="portal-tab" type="button" role="tab" data-tab="portfolio" aria-selected="false">Architecture Portfolio</button>
+    </div>
+
+    <div class="portal-view active" data-view="research">
     <main>
       <section class="hero" id="top">
         <div class="hero-copy sketch-box">
@@ -357,9 +368,44 @@
       ·
       <a data-playground-link href="#" target="_blank" rel="noreferrer">Analysis Playground</a>
     </footer>
+    </div>
+
+    <div class="portal-view" data-view="portfolio" hidden>
+      <main>
+        <section class="portfolio-hero sketch-box" id="portfolio-top">
+          <div class="eyebrow">Architecture Portfolio · Dublin High School</div>
+          <h1>Spaces shaped by <span class="emphasis">design and discipline</span></h1>
+          <p class="lead">
+            Vaibhavi Saw — aspiring architect combining digital modeling, spatial reasoning, and community leadership. Selected works from internship and independent design projects.
+          </p>
+        </section>
+
+        <section id="portfolio-about">
+          <div class="section-title">
+            <h2>About Me</h2>
+            <div class="rule"></div>
+          </div>
+          <div id="portfolioAbout"></div>
+        </section>
+
+        <section id="portfolio-projects">
+          <div class="section-title">
+            <h2>Selected Works</h2>
+            <div class="rule"></div>
+          </div>
+          <p class="portfolio-section-lead">Blueprint at left; top view and interior rendering stacked at right — the full design process in one view.</p>
+          <div class="projects-stack" id="portfolioProjects"></div>
+        </section>
+      </main>
+
+      <footer>
+        Vaibhavi Saw — Internship Portfolio · Dublin High School · Architecture &amp; Design
+      </footer>
+    </div>
   </div>
 
-  <script src="js/config.js?v=colors1"></script>
-  <script src="js/cai-calculator.js?v=colors1"></script>
+  <script src="js/config.js?v=portfolio5"></script>
+  <script src="js/cai-calculator.js?v=portfolio5"></script>
+  <script src="js/portfolio.js?v=portfolio5"></script>
 </body>
 </html>

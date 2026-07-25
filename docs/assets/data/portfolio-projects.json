@@ -1,0 +1,49 @@
+{
+  "projects": [
+    {
+      "id": "compact-residential-houzz",
+      "number": "01",
+      "title": "Compact Residential Floor Plan",
+      "subtitle": "Internship · Houzz Pro",
+      "status": "In progress",
+      "year": "2025–2026",
+      "tools": ["Houzz Pro", "Autodesk Revit", "Autodesk Fusion 360"],
+      "summary": "A compact single-level residence organized around a central great room and dining spine, with living, kitchen, and bath zones branching off a gabled core. The plan totals roughly 440 ft² — demonstrating spatial planning, dimensional accuracy, and the full design process from measured blueprint to furnished plan and interior visualization.",
+      "highlights": [
+        "Programmed five distinct zones with area takeoffs on the construction blueprint (living ~148 ft², great room ~188 ft², kitchen ~70 ft², bath ~31 ft²).",
+        "Solved a recurring Houzz roof conflict by modeling rooms separately and assembling the plan step-by-step — persistence over restart.",
+        "Presented work at three scales: annotated 2D blueprint, furnished top-view plan, and interior perspective with lighting and material study."
+      ],
+      "metrics": [
+        { "label": "Total area", "value": "~440 ft²" },
+        { "label": "Rooms modeled", "value": "5 + utility" },
+        { "label": "Primary tool", "value": "Houzz Pro" }
+      ],
+      "images": [
+        {
+          "label": "Blueprint",
+          "src": "assets/portfolio/project-01/blueprint.png",
+          "alt": "Annotated 2D blueprint with dimensions, grid lines, and room area labels",
+          "caption": "Measured 2D blueprint — grid references, dimensions, and area takeoffs."
+        },
+        {
+          "label": "Top view",
+          "src": "assets/portfolio/project-01/floor-plan-3d.png",
+          "alt": "3D furnished top-view floor plan of compact residence",
+          "caption": "Furnished top view — zoning, circulation, entry sequence, and material palette."
+        },
+        {
+          "label": "Rendering",
+          "src": "assets/portfolio/project-01/living-room-render.png",
+          "alt": "Interior perspective render of living room with garden window and ambient lighting",
+          "caption": "Interior rendering — daylight, layered lighting, and spatial depth."
+        }
+      ],
+      "video": {
+        "src": "",
+        "poster": "assets/portfolio/project-01/living-room-render.png",
+        "caption": "Walkthrough video coming soon — Houzz Pro model in action."
+      }
+    }
+  ]
+}
