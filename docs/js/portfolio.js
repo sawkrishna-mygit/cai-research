@@ -56,6 +56,10 @@ const portfolioAbout = {
     "Girls in STEM",
     "Community leadership",
   ],
+  contact: {
+    email: "saw.naraclan2134@gmail.com",
+    linkedin: "https://www.linkedin.com/in/vaibhavi-saw-469905397/",
+  },
 };
 
 function escapeHtml(text) {
@@ -120,6 +124,14 @@ function renderAbout(container) {
     "</p>" +
     "<div class=\"portfolio-tags\">" +
     tags +
+    "</div>" +
+    "<div class=\"about-links\">" +
+    "<a href=\"mailto:" +
+    escapeHtml(portfolioAbout.contact.email) +
+    "\">Email</a>" +
+    "<a href=\"" +
+    escapeHtml(portfolioAbout.contact.linkedin) +
+    "\" target=\"_blank\" rel=\"noreferrer\">LinkedIn</a>" +
     "</div>" +
     "</div></div>";
 }
