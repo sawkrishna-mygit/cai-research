@@ -57,7 +57,7 @@ const portfolioAbout = {
     "Community leadership",
   ],
   contact: {
-    email: "saw.naraclan2134@gmail.com",
+    email: "sawvaibhavi12@gmail.com",
     linkedin: "https://www.linkedin.com/in/vaibhavi-saw-469905397/",
   },
 };
