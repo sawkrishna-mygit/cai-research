@@ -139,6 +139,41 @@ class CAIAnalyzer:
         return gaps
 
 
+def analyze_single_version(
+    cert_data: pd.DataFrame,
+    occupant_data: dict[str, float],
+    n_bootstrap: int = 1000,
+) -> dict:
+    """
+    Run CAI analysis for a single certification version DataFrame.
+
+    Returns one result row as a dict with Tau, gaps, and topic metrics.
+    """
+    analyzer = CAIAnalyzer(cert_data, occupant_data)
+    results = analyzer.analyze()
+    if results.empty:
+        raise ValueError("No analysis results produced from certification data.")
+
+    row = results.iloc[0].to_dict()
+
+    if n_bootstrap != 1000:
+        system = cert_data["system"].iloc[0]
+        version = cert_data["version"].iloc[0]
+        version_data = cert_data[
+            (cert_data["system"] == system) & (cert_data["version"] == version)
+        ]
+        points_list = []
+        for topic in analyzer.topics:
+            topic_data = version_data[version_data["topic"] == topic]
+            points = topic_data["points"].iloc[0] if len(topic_data) > 0 else 0
+            points_list.append(points)
+        ci_lower, ci_upper = analyzer._bootstrap_ci(points_list, n_resamples=n_bootstrap)
+        row["CI_Lower"] = ci_lower
+        row["CI_Upper"] = ci_upper
+
+    return row
+
+
 class CAIOptimizer:
     """Predict/optimize certification allocations to improve alignment"""
 

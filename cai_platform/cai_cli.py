@@ -9,6 +9,7 @@ import argparse
 import json
 import pandas as pd
 from cai_core import CAIAnalyzer, CAIOptimizer
+from cert_pdf_extractor import analyze_pdf
 import sys
 
 def load_data(cert_file, occupant_file):
@@ -129,6 +130,80 @@ def cmd_predict(args):
     print("\n" + "="*80)
 
 
+def cmd_analyze_pdf(args):
+    """Run PDF extraction and alignment analysis."""
+    try:
+        if args.occupant_file.endswith('.json'):
+            with open(args.occupant_file) as f:
+                occupant_data = json.load(f)
+        else:
+            occ_df = pd.read_csv(args.occupant_file)
+            occupant_data = dict(zip(occ_df['topic'], occ_df['dissatisfaction_pct']))
+    except Exception as e:
+        print(f"Error loading occupant file: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"Analyzing PDF: {args.pdf}")
+    try:
+        result = analyze_pdf(
+            args.pdf,
+            occupant_data,
+            system=args.system,
+            version=args.version,
+            year=args.year,
+            n_bootstrap=args.bootstrap,
+        )
+    except Exception as e:
+        print(f"PDF analysis failed: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    stats = result["extraction_stats"]
+    print("\n" + "="*80)
+    print(f"CAI PDF ANALYSIS: {result['system']} {result['version']} ({result['year']})")
+    print("="*80)
+    print(f"\nFile: {result['filename']}")
+    print(f"Kendall τ: {result['tau']:.3f}")
+    print(f"95% CI: [{result['ci_lower']:.3f}, {result['ci_upper']:.3f}]")
+    print(f"Spearman ρ: {result['spearman_rho']:.3f}")
+    print(
+        f"\nExtraction: found={stats['credits_found']}, "
+        f"categorized={stats['credits_categorized']}, "
+        f"skipped={stats['credits_skipped']}"
+    )
+    if stats["low_confidence"]:
+        print("Warning: low-confidence extraction (few categorized IEQ credits).")
+
+    print("\nTopic points and gaps:")
+    for topic, info in result["gaps"].items():
+        print(
+            f"  {topic:12s}  points={info['points']:6.1f}  "
+            f"cert={info['cert_pct']:5.1f}%  occupant={info['occupant_pct']:4.0f}%  "
+            f"gap={info['gap']:+6.1f}%"
+        )
+
+    export_payload = {
+        "system": result["system"],
+        "version": result["version"],
+        "year": result["year"],
+        "filename": result["filename"],
+        "tau": result["tau"],
+        "p_value": result["p_value"],
+        "ci_lower": result["ci_lower"],
+        "ci_upper": result["ci_upper"],
+        "spearman_rho": result["spearman_rho"],
+        "topic_points": result["topic_points"],
+        "gaps": result["gaps"],
+        "extraction_stats": stats,
+    }
+
+    if args.output:
+        with open(args.output, "w") as f:
+            json.dump(export_payload, f, indent=2, default=str)
+        print(f"\nResults saved to {args.output}")
+
+    print("\n" + "="*80)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='CAI Platform: Certification-Occupant Alignment Analysis & Optimization'
@@ -152,6 +227,28 @@ def main():
     predict_parser.add_argument('--target-tau', type=float, default=0.0, help='Target τ value (default: 0.0)')
     predict_parser.add_argument('--output', help='Output JSON file for results')
     predict_parser.set_defaults(func=cmd_predict)
+
+    analyze_pdf_parser = subparsers.add_parser(
+        'analyze-pdf',
+        help='Extract credits from a certification PDF and compute alignment',
+    )
+    analyze_pdf_parser.add_argument('--pdf', required=True, help='Certification PDF file')
+    analyze_pdf_parser.add_argument(
+        '--occupant-file',
+        required=True,
+        help='JSON/CSV with occupant priorities',
+    )
+    analyze_pdf_parser.add_argument('--system', help='Certification system name')
+    analyze_pdf_parser.add_argument('--version', help='Certification version')
+    analyze_pdf_parser.add_argument('--year', type=int, help='Certification year')
+    analyze_pdf_parser.add_argument(
+        '--bootstrap',
+        type=int,
+        default=1000,
+        help='Bootstrap resamples (default: 1000)',
+    )
+    analyze_pdf_parser.add_argument('--output', help='Output JSON file for results')
+    analyze_pdf_parser.set_defaults(func=cmd_analyze_pdf)
 
     args = parser.parse_args()
 

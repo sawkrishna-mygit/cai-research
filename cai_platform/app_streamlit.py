@@ -25,6 +25,7 @@ import seaborn as sns
 from io import StringIO
 from cai_core import CAIAnalyzer, CAIOptimizer
 from cert_data_loader import load_certification_data
+from cert_pdf_extractor import analyze_pdf, infer_metadata_from_filename
 
 PORTFOLIO_URL = os.environ.get(
     "CAI_PORTFOLIO_URL",
@@ -70,7 +71,7 @@ Research tool for measuring alignment between building certification priorities 
 
 *Citation:* CAI Platform (2026). Open-source alignment analysis for LEED, WELL, BREEAM, and Fitwel.
 """)
-mode = st.sidebar.radio("Select Mode", ["Analyze", "Predict & Optimize"])
+mode = st.sidebar.radio("Select Mode", ["Analyze", "Analyze from PDF", "Predict & Optimize"])
 
 @st.cache_data
 def get_sample_data():
@@ -233,6 +234,145 @@ if mode == "Analyze":
 
     except Exception as e:
         st.error(f"Error: {e}")
+
+elif mode == "Analyze from PDF":
+    st.header("Analyze from PDF")
+    st.markdown(
+        "Upload any certification scorecard PDF. The app extracts credits, "
+        "classifies them into Acoustics/Thermal/Lighting/Air, and computes alignment."
+    )
+
+    pdf_file = st.file_uploader("Certification PDF", type=["pdf"], key="pdf_upload")
+    occ_file = st.file_uploader(
+        "Occupant Data (optional JSON)",
+        type=["json"],
+        key="pdf_occ_upload",
+        help="Defaults to CBE benchmark if omitted.",
+    )
+
+    inferred = infer_metadata_from_filename(pdf_file.name if pdf_file else "upload.pdf")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        system_name = st.text_input("System name", value=inferred["system"])
+    with col2:
+        version_name = st.text_input("Version", value=inferred["version"])
+    with col3:
+        year_value = st.number_input(
+            "Year",
+            min_value=1990,
+            max_value=2100,
+            value=int(inferred["year"]),
+            step=1,
+        )
+
+    n_bootstrap = st.slider(
+        "Bootstrap Resamples",
+        100,
+        5000,
+        1000,
+        step=100,
+        key="pdf_bootstrap",
+    )
+
+    if st.button("Run Analysis", key="pdf_analyze_btn"):
+        if not pdf_file:
+            st.warning("Please upload a certification PDF.")
+            st.stop()
+
+        occupant_data = occupant_dict_sample
+        if occ_file is not None:
+            occupant_data = json.load(occ_file)
+
+        try:
+            with st.spinner("Extracting credits and analyzing alignment..."):
+                result = analyze_pdf(
+                    pdf_file.getvalue(),
+                    occupant_data,
+                    system=system_name,
+                    version=version_name,
+                    year=int(year_value),
+                    filename=pdf_file.name,
+                    n_bootstrap=n_bootstrap,
+                )
+
+            stats = result["extraction_stats"]
+            if stats["low_confidence"]:
+                st.warning(
+                    "Low-confidence extraction: only "
+                    f"{stats['credits_categorized']} categorized credits found. "
+                    "Results may be incomplete for this PDF layout."
+                )
+            else:
+                st.success("PDF analyzed successfully.")
+
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Kendall τ", f"{result['tau']:.3f}")
+            with col2:
+                st.metric("CI Lower", f"{result['ci_lower']:.3f}")
+            with col3:
+                st.metric("CI Upper", f"{result['ci_upper']:.3f}")
+            with col4:
+                st.metric("Spearman ρ", f"{result['spearman_rho']:.3f}")
+
+            st.subheader("Topic Points and Gaps")
+            gap_df = pd.DataFrame([
+                {
+                    "Topic": topic,
+                    "Points": info["points"],
+                    "Occupant %": info["occupant_pct"],
+                    "Cert %": f"{info['cert_pct']:.1f}",
+                    "Gap %": f"{info['gap']:.1f}",
+                }
+                for topic, info in result["gaps"].items()
+            ])
+            st.dataframe(gap_df, use_container_width=True)
+
+            st.subheader("Extraction Summary")
+            st.write(
+                f"Credits found: **{stats['credits_found']}** | "
+                f"Categorized: **{stats['credits_categorized']}** | "
+                f"Skipped: **{stats['credits_skipped']}** | "
+                f"IEQ points total: **{stats['total_categorized_points']:.1f}**"
+            )
+            if stats["skipped_examples"]:
+                st.caption(
+                    "Examples of uncategorized credits: "
+                    + ", ".join(stats["skipped_examples"])
+                )
+
+            categorized = [
+                c for c in result["classified_credits"] if c.get("topic")
+            ]
+            if categorized:
+                st.subheader("Categorized Credits")
+                st.dataframe(
+                    pd.DataFrame(categorized)[["title", "points", "topic", "snippet"]],
+                    use_container_width=True,
+                )
+
+            st.subheader("Download Results")
+            export_payload = {
+                "system": result["system"],
+                "version": result["version"],
+                "year": result["year"],
+                "filename": result["filename"],
+                "tau": result["tau"],
+                "ci_lower": result["ci_lower"],
+                "ci_upper": result["ci_upper"],
+                "spearman_rho": result["spearman_rho"],
+                "topic_points": result["topic_points"],
+                "gaps": result["gaps"],
+                "extraction_stats": stats,
+            }
+            st.download_button(
+                label="Download PDF Analysis (JSON)",
+                data=json.dumps(export_payload, indent=2, default=str),
+                file_name=f"cai_pdf_analysis_{system_name}_{version_name}.json",
+                mime="application/json",
+            )
+        except Exception as e:
+            st.error(f"Error: {e}")
 
 else:
     st.header("Prediction & Optimization")
