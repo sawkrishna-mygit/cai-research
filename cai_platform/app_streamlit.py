@@ -56,8 +56,8 @@ if _query_param("playground") != "1":
         unsafe_allow_html=True,
     )
     st.info(
-        "The main site with **CAI Research** and **Architecture Portfolio** tabs lives on GitHub Pages. "
-        f"If you are not redirected automatically, [open the portfolio home]({PORTFOLIO_URL})."
+        "The CAI Research site lives on GitHub Pages. "
+        f"If you are not redirected automatically, [open the research home]({PORTFOLIO_URL})."
     )
     st.stop()
 
@@ -78,7 +78,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown(
-    f'<a class="portfolio-link" href="{PORTFOLIO_URL}" target="_self">← Back to Portfolio Home</a>',
+    f'<a class="portfolio-link" href="{PORTFOLIO_URL}" target="_self">← Back to CAI Research</a>',
     unsafe_allow_html=True
 )
 
